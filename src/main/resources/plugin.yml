@@ -1,4 +1,3 @@
 name: Menecia
 version: ${project.version}
 main: net.projectx.menecia.Core
-api-version: 1.15
