@@ -1,12 +1,9 @@
 package net.projectx.menecia.entity.npc.citizen;
 
-import net.projectx.menecia.Core;
 import net.projectx.menecia.entity.Mob;
 import net.projectx.menecia.entity.PassiveMob;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -27,12 +24,7 @@ public class DoraCitizen extends Mob implements PassiveMob {
 
     @Override
     public void follow(Player player) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                ((Villager) entity).getPathfinder().moveTo(player);
-            }
-        }.runTaskTimer(Core.getPlugin(Core.class), 0, 1L);
+
     }
 
     @Override
