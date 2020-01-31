@@ -12,30 +12,28 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class GeneralPlayerEvent implements Listener {
 
-    private Core plugin;
     private DataManager dataManager;
 
     public GeneralPlayerEvent(Core plugin) {
-        this.plugin = plugin;
         dataManager = plugin.getDataManager();
     }
 
     @EventHandler
-    private void onPlayerJoin(PlayerJoinEvent e) {
-        dataManager.addBrave(e.getPlayer());
+    private void onPlayerJoin(PlayerJoinEvent event) {
+        dataManager.addBrave(event.getPlayer());
     }
 
     @EventHandler
-    private void onPlayerQuit(PlayerQuitEvent e) {
-        dataManager.addBrave(e.getPlayer());
+    private void onPlayerQuit(PlayerQuitEvent event) {
+        dataManager.removeBrave(event.getPlayer());
     }
 
 
     @EventHandler
-    private void onPlayerChat(AsyncPlayerChatEvent e) {
-        e.setFormat(Utils.translateColor("&f" + e.getPlayer().getDisplayName() + " &8> &7" +
-                e.getMessage().replaceAll("%", "%%")));
-        e.setMessage(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
+    private void onPlayerChat(AsyncPlayerChatEvent event) {
+        event.setFormat(Utils.translateColor("&f" + event.getPlayer().getDisplayName() + " &8> &7" +
+                event.getMessage().replaceAll("%", "%%")));
+        event.setMessage(ChatColor.translateAlternateColorCodes('&', event.getMessage()));
     }
 
 }
