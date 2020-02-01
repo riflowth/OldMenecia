@@ -1,5 +1,6 @@
 package net.projectx.menecia.player.events;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,11 +17,11 @@ public class LevelingEvent implements Listener {
 
     @EventHandler
     private void entityDamageByPlayer(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
+        Entity damager = event.getDamager();
+        Entity victim = event.getEntity();
+        if (damager instanceof Player && !(victim instanceof Player)) {
             Player player = (Player) event.getDamager();
-            if (event.getEntity().isDead()) {
-                // TODO: Exp mechanism
-            }
+
         }
     }
 
