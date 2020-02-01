@@ -78,8 +78,8 @@ public class MobSpawner implements Listener {
     public void clearAllMobs() {
         for (Entity entity : Bukkit.getWorlds().get(0).getEntities()) {
             PersistentDataContainer dataContainer = entity.getPersistentDataContainer();
-            boolean isMeneciaMob = dataContainer.has(plugin.getNamespacedKey(Key.MOB_ID), PersistentDataType.INTEGER);
-            if (isMeneciaMob) {
+            boolean isMob = dataContainer.has(plugin.getNamespacedKey(Key.MOB_ID), PersistentDataType.INTEGER);
+            if (isMob) {
                 entity.remove();
             }
         }
@@ -87,8 +87,8 @@ public class MobSpawner implements Listener {
 
     private int getMobId(Entity entity) {
         PersistentDataContainer dataContainer = entity.getPersistentDataContainer();
-        boolean isMeneciaMob = dataContainer.has(plugin.getNamespacedKey(Key.MOB_ID), PersistentDataType.INTEGER);
-        if (isMeneciaMob) {
+        boolean isMob = dataContainer.has(plugin.getNamespacedKey(Key.MOB_ID), PersistentDataType.INTEGER);
+        if (isMob) {
             return dataContainer.get(plugin.getNamespacedKey(Key.MOB_ID), PersistentDataType.INTEGER);
         }
         return 0;
