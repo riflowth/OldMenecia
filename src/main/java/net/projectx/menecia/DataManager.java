@@ -27,7 +27,6 @@ public class DataManager {
 
     public void removeBrave(Player player) {
         braveMap.remove(player.getUniqueId());
-        Log.sendWarning("Removed Brave named &f" + player.getName());
     }
 
     public Brave getBrave(Player player) {

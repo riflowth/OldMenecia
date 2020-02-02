@@ -1,4 +1,4 @@
-package net.projectx.menecia.mob;
+package net.projectx.menecia.mobs;
 
 public interface UtilityMob extends Mob {
 }

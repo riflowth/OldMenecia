@@ -1,6 +1,6 @@
-package net.projectx.menecia.mob.monster;
+package net.projectx.menecia.mobs.monsters;
 
-import net.projectx.menecia.mob.HostileMob;
+import net.projectx.menecia.mobs.HostileMob;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 

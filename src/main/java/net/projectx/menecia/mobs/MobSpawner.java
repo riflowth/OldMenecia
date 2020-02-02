@@ -1,4 +1,4 @@
-package net.projectx.menecia.mob;
+package net.projectx.menecia.mobs;
 
 import net.projectx.menecia.Core;
 import net.projectx.menecia.resources.utilities.Log;
@@ -28,7 +28,7 @@ public class MobSpawner implements Listener {
     }
 
     public void start() {
-        Log.sendSuccess("Started Mob Spawner! &e(Please be careful of the Menecia Mobs!)");
+        Log.sendSuccess("Started Mob Spawner!");
         Location spawnLocation = Bukkit.getWorlds().get(0).getSpawnLocation();
         spawnerTask = plugin.runTaskTimer(() -> {
             for (Mob mob : Mobs.getAllMobs()) {

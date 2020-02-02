@@ -1,8 +1,7 @@
-package net.projectx.menecia.mob;
+package net.projectx.menecia.mobs;
 
-import net.projectx.menecia.mob.monster.StarvingZombie;
+import net.projectx.menecia.mobs.monsters.StarvingZombie;
 import net.projectx.menecia.resources.Keys;
-import net.projectx.menecia.resources.utilities.Log;
 import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
@@ -25,9 +24,7 @@ public class Mobs {
     public static void registerMobs() {
         if (instance == null) {
             instance = new Mobs();
-            Log.sendWarning("Registering all mobs...");
             instance.mobMap.put(StarvingZombie.ID, new StarvingZombie());
-            Log.sendWarning("Register all mobs successfully!");
         }
     }
 
