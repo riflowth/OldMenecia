@@ -28,6 +28,7 @@ public class MobSpawner implements Listener {
     }
 
     public void start() {
+        Log.sendSuccess("Started Mob Spawner! &e(Please be careful of the Menecia Mobs!)");
         Location spawnLocation = Bukkit.getWorlds().get(0).getSpawnLocation();
         spawnerTask = plugin.runTaskTimer(() -> {
             for (Mob mob : Mobs.getAllMobs()) {
