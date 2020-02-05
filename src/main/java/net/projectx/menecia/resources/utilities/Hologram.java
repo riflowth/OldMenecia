@@ -5,7 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.AreaEffectCloud;
-import org.bukkit.entity.EntityType;
+import org.bukkit.util.Consumer;
 
 public class Hologram {
 
@@ -19,13 +19,14 @@ public class Hologram {
 
     private static AreaEffectCloud spawnAreaEffectCloud(String string, Location location) {
         World world = location.getWorld();
-        AreaEffectCloud hologram = (AreaEffectCloud) world.spawnEntity(location, EntityType.AREA_EFFECT_CLOUD);
-        hologram.setCustomNameVisible(true);
-        hologram.setCustomName(Utils.translateColor(string));
-        hologram.clearCustomEffects();
-        hologram.setRadius(0);
-        hologram.setParticle(Particle.REDSTONE, new Particle.DustOptions(Color.BLACK, 0));
-        return hologram;
+        Consumer<AreaEffectCloud> consumer = (hologram) -> {
+            hologram.setCustomNameVisible(true);
+            hologram.setCustomName(Utils.translateColor(string));
+            hologram.clearCustomEffects();
+            hologram.setRadius(0);
+            hologram.setParticle(Particle.REDSTONE, new Particle.DustOptions(Color.BLACK, 0));
+        };
+        return world.spawn(location, AreaEffectCloud.class, consumer);
     }
 
 }
