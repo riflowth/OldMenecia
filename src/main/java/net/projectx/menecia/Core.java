@@ -74,7 +74,7 @@ public class Core extends JavaPlugin {
     private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new GeneralPlayerEvent(this), this);
-        pluginManager.registerEvents(new MobDamageByBraveEvent(), this);
+        pluginManager.registerEvents(new MobDamageByBraveEvent(this), this);
         pluginManager.registerEvents(new LevelingEvent(this), this);
     }
 

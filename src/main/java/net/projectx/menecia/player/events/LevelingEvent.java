@@ -1,6 +1,7 @@
 package net.projectx.menecia.player.events;
 
 import net.projectx.menecia.Core;
+import net.projectx.menecia.resources.Icons;
 import net.projectx.menecia.resources.utilities.Hologram;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -38,10 +39,11 @@ public class LevelingEvent implements Listener {
     }
 
     private void displayDamageHologram(int damage, Location location) {
-        double x = ThreadLocalRandom.current().nextDouble(-1.5, 1.5);
+        double x = ThreadLocalRandom.current().nextDouble(-1.25, 1.25);
         double y = ThreadLocalRandom.current().nextDouble(0, 1.5);
-        double z = ThreadLocalRandom.current().nextDouble(-1.5, 1.5);
-        Hologram.drawTemporary("&c-" + damage + " \u2764", 10, location.toCenterLocation().add(x, y, z));
+        double z = ThreadLocalRandom.current().nextDouble(-1.25, 1.25);
+        Hologram.drawTemporary("&c-" + damage + " &4" + Icons.RED_HEART, 10,
+                location.toCenterLocation().add(x, y, z));
     }
 
     @EventHandler
