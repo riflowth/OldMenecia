@@ -1,3 +1,4 @@
 name: Menecia
 version: ${project.version}
 main: net.projectx.menecia.Core
+depend: [ProtocolLib]
