@@ -1,11 +1,7 @@
 package net.projectx.menecia.resources;
 
-public enum Icons {
+public class Icons {
 
-    RED_HEART("\u2764");
-
-    Icons(String unicode) {
-
-    }
+    public static final String RED_HEART = "\u2764";
 
 }
