@@ -36,10 +36,9 @@
     <dependencies>
         <dependency>
             <groupId>com.destroystokyo.paper</groupId>
-            <artifactId>paper</artifactId>
+            <artifactId>paper-api</artifactId>
             <version>1.15.2-R0.1-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/patched_1.15.2_b79.jar</systemPath>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

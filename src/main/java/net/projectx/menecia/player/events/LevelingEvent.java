@@ -41,7 +41,7 @@ public class LevelingEvent implements Listener {
         double x = ThreadLocalRandom.current().nextDouble(-1.5, 1.5);
         double y = ThreadLocalRandom.current().nextDouble(0, 1.5);
         double z = ThreadLocalRandom.current().nextDouble(-1.5, 1.5);
-        Hologram.drawTemporary("&c-" + damage + " \u2764", 3, location.clone().add(x, y, z));
+        Hologram.drawTemporary("&c-" + damage + " \u2764", 10, location.toCenterLocation().add(x, y, z));
     }
 
     @EventHandler

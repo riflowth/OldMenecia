@@ -1,6 +1,8 @@
 package net.projectx.menecia.resources.utilities;
 
+import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.EntityType;
@@ -11,8 +13,8 @@ public class Hologram {
         spawnAreaEffectCloud(string, location);
     }
 
-    public static void drawTemporary(String string, int second, Location location) {
-        spawnAreaEffectCloud(string, location).setDuration(20 * second);
+    public static void drawTemporary(String string, int tick, Location location) {
+        spawnAreaEffectCloud(string, location).setDuration(tick);
     }
 
     private static AreaEffectCloud spawnAreaEffectCloud(String string, Location location) {
@@ -20,8 +22,9 @@ public class Hologram {
         AreaEffectCloud hologram = (AreaEffectCloud) world.spawnEntity(location, EntityType.AREA_EFFECT_CLOUD);
         hologram.setCustomNameVisible(true);
         hologram.setCustomName(Utils.translateColor(string));
-        hologram.setRadius(0);
         hologram.clearCustomEffects();
+        hologram.setRadius(0);
+        hologram.setParticle(Particle.REDSTONE, new Particle.DustOptions(Color.BLACK, 0));
         return hologram;
     }
 
