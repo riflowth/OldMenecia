@@ -51,7 +51,7 @@ public class MobUtil {
             if (entity instanceof Zombie) ((Zombie) entity).setBaby(false);
         }
 
-        return location.getWorld().spawnEntity(location, mob.getEntityType());
+        return entity;
     }
 
     public static boolean isMob(Entity entity) {
