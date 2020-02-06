@@ -49,7 +49,7 @@ public class MobSpawner implements Listener {
     private void entityDeathEvent(EntityDeathEvent event) {
         Entity entity = event.getEntity();
         if (MobUtil.isMob(entity)) {
-            Mob mob = MobUtil.get(MobUtil.getId(entity));
+            Mob mob = MobUtil.getMobInstance(entity);
             spawnedCountMap.put(mob, spawnedCountMap.get(mob) - 1);
             Log.sendWarning("Despawned 1 " + MobUtil.getDisplayName(mob)
                     + " &6(" + spawnedCountMap.get(mob) + "/" + maxiumNodeSpawn + ")");
