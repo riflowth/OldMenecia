@@ -9,12 +9,8 @@ import org.bukkit.util.Consumer;
 
 public class Hologram {
 
-    public static void draw(String string, Location location) {
-        spawnAreaEffectCloud(string, location);
-    }
-
-    public static void drawTemporary(String string, int tick, Location location) {
-        spawnAreaEffectCloud(string, location).setDuration(tick);
+    public static AreaEffectCloud draw(String string, Location location) {
+        return spawnAreaEffectCloud(string, location);
     }
 
     private static AreaEffectCloud spawnAreaEffectCloud(String string, Location location) {
