@@ -1,7 +1,7 @@
 package net.projectx.menecia;
 
 import net.projectx.menecia.mobs.MobSpawner;
-import net.projectx.menecia.mobs.Mobs;
+import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.mobs.events.MobDamageByBraveEvent;
 import net.projectx.menecia.player.events.GeneralPlayerEvent;
 import net.projectx.menecia.player.events.LevelingEvent;
@@ -20,8 +20,7 @@ public class Core extends JavaPlugin {
     public void onEnable() {
         Log.sendHeaderBanner();
 
-        dataManager = new DataManager();
-
+        registerManagers();
         registerMobSystem();
         registerEvents();
 
@@ -32,21 +31,31 @@ public class Core extends JavaPlugin {
     public void onDisable() {
         Log.sendHeaderBanner();
 
-        dataManager = null;
-        unregisterMobSystem();
+        unregisterAll();
 
         Log.sendFooterBanner();
     }
 
+    private void registerEvents() {
+        PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvents(new GeneralPlayerEvent(this), this);
+        pluginManager.registerEvents(new MobDamageByBraveEvent(this), this);
+        pluginManager.registerEvents(new LevelingEvent(this), this);
+    }
+
+    private void registerManagers() {
+        dataManager = new DataManager();
+    }
+
     private void registerMobSystem() {
-        Mobs.registerMobs();
+        MobUtil.registerMobs();
         mobSpawner = new MobSpawner(this);
         mobSpawner.clearAllMobs();
         mobSpawner.start();
 
     }
 
-    private void unregisterMobSystem() {
+    private void unregisterAll() {
         mobSpawner.stop();
         mobSpawner = null;
     }
@@ -69,13 +78,6 @@ public class Core extends JavaPlugin {
 
     public BukkitTask runTaskTimerAsynchronously(Runnable runnable, long delay, long period) {
         return this.getScheduler().runTaskTimerAsynchronously(this, runnable, delay, period);
-    }
-
-    private void registerEvents() {
-        PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(new GeneralPlayerEvent(this), this);
-        pluginManager.registerEvents(new MobDamageByBraveEvent(this), this);
-        pluginManager.registerEvents(new LevelingEvent(this), this);
     }
 
     public DataManager getDataManager() {

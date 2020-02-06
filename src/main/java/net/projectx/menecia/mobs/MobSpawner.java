@@ -31,14 +31,14 @@ public class MobSpawner implements Listener {
         Log.sendSuccess("Started Mob Spawner!");
         Location spawnLocation = Bukkit.getWorlds().get(0).getSpawnLocation();
         spawnerTask = plugin.runTaskTimer(() -> {
-            for (Mob mob : Mobs.getAllMobs()) {
+            for (Mob mob : MobUtil.getAllMobs()) {
                 if (!spawnedCountMap.containsKey(mob)) {
                     spawnedCountMap.put(mob, 0);
                 }
                 if (spawnedCountMap.get(mob) < maxiumNodeSpawn) {
-                    Mobs.spawn(mob, spawnLocation);
+                    MobUtil.spawn(mob, spawnLocation);
                     spawnedCountMap.put(mob, spawnedCountMap.get(mob) + 1);
-                    Log.sendSuccess("Spawned 1 " + Mobs.getDisplayName(mob)
+                    Log.sendSuccess("Spawned 1 " + MobUtil.getDisplayName(mob)
                             + " &6(" + spawnedCountMap.get(mob) + "/" + maxiumNodeSpawn + ")");
                 }
             }
@@ -48,10 +48,10 @@ public class MobSpawner implements Listener {
     @EventHandler
     private void entityDeathEvent(EntityDeathEvent event) {
         Entity entity = event.getEntity();
-        if (Mobs.isMob(entity)) {
-            Mob mob = Mobs.get(Mobs.getId(entity));
+        if (MobUtil.isMob(entity)) {
+            Mob mob = MobUtil.get(MobUtil.getId(entity));
             spawnedCountMap.put(mob, spawnedCountMap.get(mob) - 1);
-            Log.sendWarning("Despawned 1 " + Mobs.getDisplayName(mob)
+            Log.sendWarning("Despawned 1 " + MobUtil.getDisplayName(mob)
                     + " &6(" + spawnedCountMap.get(mob) + "/" + maxiumNodeSpawn + ")");
         }
     }
@@ -65,7 +65,7 @@ public class MobSpawner implements Listener {
 
     public void clearAllMobs() {
         for (Entity entity : Bukkit.getWorlds().get(0).getEntities()) {
-            if (Mobs.isMob(entity)) {
+            if (MobUtil.isMob(entity)) {
                 entity.remove();
             }
         }

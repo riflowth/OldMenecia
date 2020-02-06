@@ -6,7 +6,6 @@ import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Zombie;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -16,14 +15,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Mobs {
+public class MobUtil {
 
-    private static Mobs instance;
+    private static MobUtil instance;
     private Map<Integer, Mob> mobMap = new HashMap<>();
 
     public static void registerMobs() {
         if (instance == null) {
-            instance = new Mobs();
+            instance = new MobUtil();
             instance.mobMap.put(StarvingZombie.ID, new StarvingZombie());
         }
     }
@@ -40,21 +39,19 @@ public class Mobs {
         Entity entity = location.getWorld().spawnEntity(location, mob.getEntityType());
 
         entity.getPersistentDataContainer().set(Keys.MOB_ID, PersistentDataType.INTEGER, mob.getId());
-
         entity.setCustomNameVisible(true);
         entity.setCustomName(getDisplayName(mob));
 
         if (entity instanceof LivingEntity) {
             LivingEntity livingEntity = (LivingEntity) entity;
             livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(mob.getMaxHealth());
+            livingEntity.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
             livingEntity.setHealth(mob.getMaxHealth());
+
+            if (entity instanceof Zombie) ((Zombie) entity).setBaby(false);
         }
 
-        if (mob.getEntityType() == EntityType.ZOMBIE) {
-            ((Zombie) entity).setBaby(false);
-        }
-
-        return entity;
+        return location.getWorld().spawnEntity(location, mob.getEntityType());
     }
 
     public static boolean isMob(Entity entity) {
