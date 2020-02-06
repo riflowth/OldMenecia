@@ -27,36 +27,24 @@ public class MobUtil {
         }
     }
 
-    public static Mob get(int mobId) {
-        return instance.mobMap.get(mobId);
-    }
-
-    public static Collection<Mob> getAllMobs() {
-        return instance.mobMap.values();
-    }
-
     public static Entity spawn(Mob mob, Location location) {
-        Entity entity = location.getWorld().spawnEntity(location, mob.getEntityType());
+        try {
+            LivingEntity entity = (LivingEntity) location.getWorld().spawnEntity(location, mob.getEntityType());
 
-        entity.getPersistentDataContainer().set(Keys.MOB_ID, PersistentDataType.INTEGER, mob.getId());
-        entity.setCustomNameVisible(true);
-        entity.setCustomName(getDisplayName(mob));
+            entity.getPersistentDataContainer().set(Keys.MOB_ID, PersistentDataType.INTEGER, mob.getId());
+            entity.setCustomNameVisible(true);
+            entity.setCustomName(getDisplayName(mob));
 
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity) entity;
-            livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(mob.getMaxHealth());
-            livingEntity.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-            livingEntity.setHealth(mob.getMaxHealth());
+            entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(mob.getMaxHealth());
+            entity.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+            entity.setHealth(mob.getMaxHealth());
 
             if (entity instanceof Zombie) ((Zombie) entity).setBaby(false);
+
+            return entity;
+        } catch (ClassCastException exception) {
+            return null;
         }
-
-        return entity;
-    }
-
-    public static boolean isMob(Entity entity) {
-        PersistentDataContainer dataContainer = entity.getPersistentDataContainer();
-        return dataContainer.has(Keys.MOB_ID, PersistentDataType.INTEGER);
     }
 
     public static int getId(Entity entity) {
@@ -65,6 +53,24 @@ public class MobUtil {
             return dataContainer.get(Keys.MOB_ID, PersistentDataType.INTEGER);
         }
         return 0;
+    }
+
+    public static Mob getMobInstance(int mobId) {
+        return instance.mobMap.get(mobId);
+    }
+
+    public static Mob getMobInstance(Entity entity) {
+        return instance.mobMap.get(getId(entity));
+    }
+
+    public static Collection<Mob> getAllMobs() {
+        return instance.mobMap.values();
+    }
+
+    public static boolean isMob(Entity entity) {
+        if (!(entity instanceof LivingEntity)) return false;
+        PersistentDataContainer dataContainer = entity.getPersistentDataContainer();
+        return dataContainer.has(Keys.MOB_ID, PersistentDataType.INTEGER);
     }
 
     public static String getDisplayName(Mob mob) {
