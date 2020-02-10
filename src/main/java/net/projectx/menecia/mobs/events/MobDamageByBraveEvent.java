@@ -1,6 +1,5 @@
 package net.projectx.menecia.mobs.events;
 
-import com.google.common.base.Strings;
 import net.projectx.menecia.Core;
 import net.projectx.menecia.DataManager;
 import net.projectx.menecia.mobs.Mob;
@@ -9,10 +8,13 @@ import net.projectx.menecia.player.Brave;
 import net.projectx.menecia.resources.Icons;
 import net.projectx.menecia.resources.utilities.Hologram;
 import net.projectx.menecia.resources.utilities.Utils;
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -30,8 +32,9 @@ public class MobDamageByBraveEvent implements Listener {
     private Core plugin;
     private DataManager dataManager;
     private static final int damageIndicatorShowTick = 20;
-    private static final int healthBarScale = 20;
+    private static final int healthBarScale = 1;
     private Map<LivingEntity, Map<UUID, Double>> damageMap = new HashMap<>();
+    private Map<LivingEntity, BossBar> healthBarMap = new HashMap<>();
 
     public MobDamageByBraveEvent(Core plugin) {
         this.plugin = plugin;
@@ -49,69 +52,71 @@ public class MobDamageByBraveEvent implements Listener {
             LivingEntity mobEntity = (LivingEntity) event.getEntity();
             Mob mob = MobUtil.getMobInstance(mobEntity);
             Location mobLocation = mobEntity.getLocation();
-            double mobMaxHealth = mob.getMaxHealth();
-            double mobHealth = mobEntity.getHealth();
 
-            if (braveEntity.getInventory().getItemInMainHand().getType().isSolid() ||
-                    braveEntity.getInventory().getItemInMainHand().getType().isAir()) {
-                event.setDamage(1);
-            }
-
-            mobHealth -= event.getDamage();
-
+            double damage = calculateDamage(braveEntity);
+            updateDamage(braveEntity, mobEntity, damage);
             displayDamageEffect(mobEntity);
-            displayDamageIndicator(event.getDamage(), mobLocation);
-            mobEntity.setCustomName(getHealthBar(mobHealth, mobMaxHealth));
-            setKnockback(mobEntity, braveEntity);
+            displayDamageIndicator(damage, mobLocation);
+            takeKnockback(mobEntity, braveEntity);
 
-            if (damageMap.containsKey(mobEntity)) {
-                Map<UUID, Double> braveDamagingMap = damageMap.get(mobEntity);
-                if (!braveDamagingMap.containsKey(braveEntity.getUniqueId())) {
-                    braveDamagingMap.put(braveEntity.getUniqueId(), event.getDamage());
-                } else {
-                    Double latestDamage = braveDamagingMap.get(braveEntity.getUniqueId());
-                    braveDamagingMap.put(braveEntity.getUniqueId(), latestDamage + event.getDamage());
-                }
-            } else {
-                damageMap.put(mobEntity, new HashMap<UUID, Double>() {{
-                    put(braveEntity.getUniqueId(), event.getDamage());
-                }});
-            }
-
+            double mobHealth = mobEntity.getHealth();
+            mobHealth -= damage;
             if (mobHealth <= 0) {
-                mobEntity.setHealth(0);
-                int totalDamage = (int) damageMap.get(mobEntity).get(braveEntity.getUniqueId()).doubleValue();
+                int totalDamage = (int) getTotalDamage(mobEntity, braveEntity);
                 braveEntity.sendActionBar(Utils.color("&4You have took " + totalDamage  + " damage point!"));
-                damageMap.remove(mobEntity);
+                killMob(mobEntity);
             } else {
                 mobEntity.setHealth(mobHealth);
+                showHealthBar(braveEntity, mobEntity);
             }
         }
     }
 
-    private String getHealthBar(double currentHealth, double maxHealth) {
-        double healthBarValue = (currentHealth / maxHealth) * healthBarScale;
-        if (currentHealth <= 0) healthBarValue = 0;
-        int heathBarPercentage = (int) Math.round((currentHealth / maxHealth) * 100);
-
-        ChatColor componentColor, indicatorColor;
-        if ((heathBarPercentage >= 80) && (heathBarPercentage <= 100)) {
-            componentColor = ChatColor.DARK_GREEN;
-            indicatorColor = ChatColor.GREEN;
-        } else if ((heathBarPercentage >= 60) && (heathBarPercentage < 80)) {
-            componentColor = ChatColor.GOLD;
-            indicatorColor = ChatColor.YELLOW;
-        } else if ((heathBarPercentage >= 40) && (heathBarPercentage < 60)) {
-            componentColor = ChatColor.RED;
-            indicatorColor = ChatColor.GOLD;
-        } else {
-            componentColor = ChatColor.DARK_RED;
-            indicatorColor = ChatColor.RED;
+    private double calculateDamage(Player damager) {
+        if (damager.getInventory().getItemInMainHand().getType().isSolid() ||
+                damager.getInventory().getItemInMainHand().getType().isAir()) {
+            return 1;
         }
+        return 0;
+    }
 
-        String healthBar = Strings.repeat(indicatorColor + "|", (int) healthBarValue) +
-                Strings.repeat(ChatColor.GRAY + "|", (int) (healthBarScale - healthBarValue));
-        return componentColor + "[" + healthBar + componentColor + "]";
+    private double getTotalDamage(LivingEntity mobEntity, Player braveEntity) {
+        return damageMap.get(mobEntity).get(braveEntity.getUniqueId());
+    }
+
+    private void updateDamage(Player braveEntity, LivingEntity mobEntity, double damage) {
+        damageMap.putIfAbsent(mobEntity, new HashMap<UUID, Double>() {{ put(braveEntity.getUniqueId(), 0D); }});
+        Map<UUID, Double> braveDamagingMap = damageMap.get(mobEntity);
+        braveDamagingMap.putIfAbsent(braveEntity.getUniqueId(), damage);
+        double latestDamage = braveDamagingMap.get(braveEntity.getUniqueId());
+        braveDamagingMap.put(braveEntity.getUniqueId(), latestDamage + damage);
+    }
+
+    private void updateHealthBar(LivingEntity mobEntity) {
+        double mobMaxHealth = MobUtil.getMobInstance(mobEntity).getMaxHealth();
+        double mobHealth = mobEntity.getHealth();
+        double healthBarValue = (mobHealth / mobMaxHealth) * healthBarScale;
+        if (mobHealth <= 0) healthBarValue = 0;
+        BossBar healthBar = healthBarMap.get(mobEntity);
+        healthBar.setProgress(healthBarValue);
+        String mobDisplayName = MobUtil.getDisplayNameWithLevel(MobUtil.getMobInstance(mobEntity));
+        int health = (int) mobEntity.getHealth();
+        String display = Utils.color(mobDisplayName + " &f- &c" + health + " &4" + Icons.RED_HEART);
+        healthBar.setTitle(display);
+    }
+
+    private void showHealthBar(Player braveEntity, LivingEntity mobEntity) {
+        healthBarMap.putIfAbsent(mobEntity, createHealthBar(mobEntity));
+        BossBar healthBar = healthBarMap.get(mobEntity);
+        if (!healthBar.getPlayers().contains(braveEntity)) healthBar.addPlayer(braveEntity);
+        updateHealthBar(mobEntity);
+    }
+
+    private BossBar createHealthBar(LivingEntity mobEntity) {
+        String mobDisplayName = MobUtil.getDisplayNameWithLevel(MobUtil.getMobInstance(mobEntity));
+        int health = (int) mobEntity.getHealth();
+        String display = Utils.color(mobDisplayName + " &f- &c" + health + " &4" + Icons.RED_HEART);
+        return Bukkit.createBossBar(display, BarColor.RED, BarStyle.SEGMENTED_20);
     }
 
     private void displayDamageIndicator(double damage, Location location) {
@@ -123,13 +128,20 @@ public class MobDamageByBraveEvent implements Listener {
         plugin.runTaskLater(damageIndicator::remove, damageIndicatorShowTick);
     }
 
+    private void killMob(LivingEntity mobEntity) {
+        mobEntity.setHealth(0);
+        damageMap.remove(mobEntity);
+        healthBarMap.get(mobEntity).removeAll();
+        healthBarMap.remove(mobEntity);
+    }
+
     private void displayDamageEffect(Entity entity) {
         entity.playEffect(EntityEffect.HURT);
         entity.getLocation().getWorld().spawnParticle(Particle.DAMAGE_INDICATOR,
                 entity.getLocation().toCenterLocation(), 4, 0.0, 0.0, 0.0, 0.3);
     }
 
-    private void setKnockback(Entity victim, Entity damager) {
+    private void takeKnockback(Entity victim, Entity damager) {
         Location knowbackLocation = damager.getLocation().clone();
         knowbackLocation.setPitch(0);
         victim.setVelocity(knowbackLocation.getDirection().normalize().multiply(0.05));

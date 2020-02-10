@@ -74,7 +74,7 @@ public class MobUtil {
         return dataContainer.has(Keys.MOB_ID, PersistentDataType.INTEGER);
     }
 
-    public static String getDisplayName(Mob mob) {
+    public static String getDisplayNameWithLevel(Mob mob) {
         String mobName = mob.getName();
         int mobLevel = mob.getLevel();
         if (mob instanceof HostileMob) {
@@ -83,6 +83,17 @@ public class MobUtil {
             return Utils.color("&6" + mobName + " &2[Lv." + mobLevel + "]");
         } else {
             return Utils.color("&a" + mobName + " &2[Lv." + mobLevel + "]");
+        }
+    }
+
+    public static String getDisplayName(Mob mob) {
+        String mobName = mob.getName();
+        if (mob instanceof HostileMob) {
+            return Utils.color("&c" + mobName);
+        } else if (mob instanceof NeutralMob) {
+            return Utils.color("&6" + mobName);
+        } else {
+            return Utils.color("&a" + mobName);
         }
     }
 

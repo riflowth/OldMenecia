@@ -52,7 +52,6 @@ public class Core extends JavaPlugin {
         mobSpawner = new MobSpawner(this);
         mobSpawner.clearAllMobs();
         mobSpawner.start();
-
     }
 
     private void unregisterAll() {
