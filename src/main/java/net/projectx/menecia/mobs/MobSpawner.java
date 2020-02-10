@@ -43,7 +43,7 @@ public class MobSpawner implements Listener {
                             + " &6(" + spawnedCountMap.get(mob) + "/" + maxiumNodeSpawn + ")");
                 }
             }
-        }, 0, 20 * 20L);
+        }, 0, 10 * 20L);
     }
 
     @EventHandler

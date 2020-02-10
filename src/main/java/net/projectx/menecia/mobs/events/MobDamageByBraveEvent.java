@@ -35,6 +35,7 @@ public class MobDamageByBraveEvent implements Listener {
     private static final int healthBarScale = 1;
     private Map<LivingEntity, Map<UUID, Double>> damageMap = new HashMap<>();
     private Map<LivingEntity, BossBar> healthBarMap = new HashMap<>();
+    private Map<UUID, BossBar> healthBarCache = new HashMap<>();
 
     public MobDamageByBraveEvent(Core plugin) {
         this.plugin = plugin;
@@ -108,8 +109,18 @@ public class MobDamageByBraveEvent implements Listener {
     private void showHealthBar(Player braveEntity, LivingEntity mobEntity) {
         healthBarMap.putIfAbsent(mobEntity, createHealthBar(mobEntity));
         BossBar healthBar = healthBarMap.get(mobEntity);
+        cacheHealthBar(braveEntity, healthBar);
         if (!healthBar.getPlayers().contains(braveEntity)) healthBar.addPlayer(braveEntity);
         updateHealthBar(mobEntity);
+    }
+
+    private void cacheHealthBar(Player braveEntity, BossBar newHealthBar) {
+        if (healthBarCache.get(braveEntity.getUniqueId()) != null) {
+            if (healthBarCache.get(braveEntity.getUniqueId()) != newHealthBar) {
+                healthBarCache.get(braveEntity.getUniqueId()).removePlayer(braveEntity);
+            }
+        }
+        healthBarCache.put(braveEntity.getUniqueId(), newHealthBar);
     }
 
     private BossBar createHealthBar(LivingEntity mobEntity) {
