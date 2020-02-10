@@ -34,6 +34,7 @@ public class MobUtil {
             entity.getPersistentDataContainer().set(Keys.MOB_ID, PersistentDataType.INTEGER, mob.getId());
             entity.setCustomNameVisible(true);
             entity.setCustomName(getDisplayName(mob));
+            entity.setRemoveWhenFarAway(false);
 
             entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(mob.getMaxHealth());
             entity.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);

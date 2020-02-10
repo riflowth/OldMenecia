@@ -46,20 +46,24 @@ public class MobSpawner implements Listener {
     }
 
     @EventHandler
-    private void entityDeathEvent(EntityDeathEvent event) {
+    private void mobDeathEvent(EntityDeathEvent event) {
         Entity entity = event.getEntity();
-        if (MobUtil.isMob(entity)) {
-            Mob mob = MobUtil.getMobInstance(entity);
-            spawnedCountMap.put(mob, spawnedCountMap.get(mob) - 1);
-            Log.sendWarning("Despawned 1 " + MobUtil.getDisplayName(mob)
-                    + " &6(" + spawnedCountMap.get(mob) + "/" + maxiumNodeSpawn + ")");
-        }
+        removeMob(entity);
     }
 
     @EventHandler
     private void resetVanillaCombust(EntityCombustEvent event) {
         if (event.getEntityType() == EntityType.ZOMBIE) {
             event.setCancelled(true);
+        }
+    }
+
+    public void removeMob(Entity entity) {
+        if (MobUtil.isMob(entity)) {
+            Mob mob = MobUtil.getMobInstance(entity);
+            spawnedCountMap.put(mob, spawnedCountMap.get(mob) - 1);
+            Log.sendWarning("Despawned 1 " + MobUtil.getDisplayName(mob)
+                    + " &6(" + spawnedCountMap.get(mob) + "/" + maxiumNodeSpawn + ")");
         }
     }
 
