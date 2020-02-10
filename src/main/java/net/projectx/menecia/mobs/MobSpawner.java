@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.SlimeSplitEvent;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class MobSpawner implements Listener {
                 if (spawnedCountMap.get(mob) < maxiumNodeSpawn) {
                     MobUtil.spawn(mob, spawnLocation);
                     spawnedCountMap.put(mob, spawnedCountMap.get(mob) + 1);
-                    Log.sendSuccess("Spawned 1 " + MobUtil.getDisplayName(mob)
+                    Log.sendSuccess("Spawned 1 " + MobUtil.getDisplayNameWithLevel(mob)
                             + " &6(" + spawnedCountMap.get(mob) + "/" + maxiumNodeSpawn + ")");
                 }
             }
@@ -58,11 +59,16 @@ public class MobSpawner implements Listener {
         }
     }
 
+    @EventHandler
+    private void resetVanillaSplitting(SlimeSplitEvent event) {
+        event.setCancelled(true);
+    }
+
     public void removeMob(Entity entity) {
         if (MobUtil.isMob(entity)) {
             Mob mob = MobUtil.getMobInstance(entity);
             spawnedCountMap.put(mob, spawnedCountMap.get(mob) - 1);
-            Log.sendWarning("Despawned 1 " + MobUtil.getDisplayName(mob)
+            Log.sendWarning("Despawned 1 " + MobUtil.getDisplayNameWithLevel(mob)
                     + " &6(" + spawnedCountMap.get(mob) + "/" + maxiumNodeSpawn + ")");
         }
     }

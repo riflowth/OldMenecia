@@ -1,18 +1,20 @@
 package net.projectx.menecia.mobs.monsters;
 
 import net.projectx.menecia.mobs.HostileMob;
+import net.projectx.menecia.mobs.ResizableMob;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-public class StarvingZombie implements HostileMob {
+public class MotherSlime implements HostileMob, ResizableMob {
 
-    public static final int ID = 1;
-    private static final EntityType entityType = EntityType.ZOMBIE;
-    private static final String name = "Starving Zombie";
-    private static final int level = 5;
-    private static final int maxHealth = 10;
-    private static final int[] attackDamageRange = new int[] {2, 5};
+    public static final int ID = 2;
+    private static final EntityType entityType = EntityType.SLIME;
+    private static final String name = "Mother Slime";
+    private static final int level = 2;
+    private static final int maxHealth = 25;
+    private static final int[] attackDamageRange = {8, 12};
     private static final int experience = 5;
+    private static final int[] size = {3};
 
     @Override
     public void attack(Player player) {
@@ -69,4 +71,8 @@ public class StarvingZombie implements HostileMob {
         return experience;
     }
 
+    @Override
+    public int[] getSize() {
+        return size;
+    }
 }

@@ -131,7 +131,7 @@ public class MobDamageByBraveEvent implements Listener {
     private void killMob(LivingEntity mobEntity) {
         mobEntity.setHealth(0);
         damageMap.remove(mobEntity);
-        healthBarMap.get(mobEntity).removeAll();
+        if (healthBarMap.containsKey(mobEntity)) healthBarMap.get(mobEntity).removeAll();
         healthBarMap.remove(mobEntity);
     }
 

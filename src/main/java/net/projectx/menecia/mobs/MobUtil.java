@@ -1,19 +1,18 @@
 package net.projectx.menecia.mobs;
 
-import net.projectx.menecia.mobs.monsters.StarvingZombie;
+import net.projectx.menecia.mobs.monsters.BabySlime;
 import net.projectx.menecia.resources.Keys;
 import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MobUtil {
 
@@ -23,24 +22,36 @@ public class MobUtil {
     public static void registerMobs() {
         if (instance == null) {
             instance = new MobUtil();
-            instance.mobMap.put(StarvingZombie.ID, new StarvingZombie());
+            instance.mobMap.put(BabySlime.ID, new BabySlime());
         }
     }
 
-    public static Entity spawn(Mob mob, Location location) {
+    public static LivingEntity spawn(Mob mob, Location location) {
         try {
             LivingEntity entity = (LivingEntity) location.getWorld().spawnEntity(location, mob.getEntityType());
 
             entity.getPersistentDataContainer().set(Keys.MOB_ID, PersistentDataType.INTEGER, mob.getId());
             entity.setCustomNameVisible(true);
-            entity.setCustomName(getDisplayName(mob));
+            entity.setCustomName(getDisplayNameWithLevel(mob));
             entity.setRemoveWhenFarAway(false);
+
+            if (entity instanceof Zombie) ((Zombie) entity).setBaby(false);
+            if (mob instanceof ResizableMob) {
+                int[] allSize = ((ResizableMob) mob).getSize();
+                int selectedSize = allSize[0];
+                if (allSize.length > 1) {
+                    selectedSize = ThreadLocalRandom.current().nextInt(allSize[0], allSize[allSize.length - 1] + 1);
+                }
+                if (entity instanceof Slime) {
+                    ((Slime) entity).setSize(selectedSize);
+                } else if (entity instanceof Phantom) {
+                    ((Phantom) entity).setSize(selectedSize);
+                }
+            }
 
             entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(mob.getMaxHealth());
             entity.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
             entity.setHealth(mob.getMaxHealth());
-
-            if (entity instanceof Zombie) ((Zombie) entity).setBaby(false);
 
             return entity;
         } catch (ClassCastException exception) {
