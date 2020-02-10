@@ -31,7 +31,7 @@ public class GeneralPlayerEvent implements Listener {
 
     @EventHandler
     private void onPlayerChat(AsyncPlayerChatEvent event) {
-        event.setFormat(Utils.translateColor("&f" + event.getPlayer().getDisplayName() + " &8> &7" +
+        event.setFormat(Utils.color("&f" + event.getPlayer().getDisplayName() + " &8> &7" +
                 event.getMessage().replaceAll("%", "%%")));
         event.setMessage(ChatColor.translateAlternateColorCodes('&', event.getMessage()));
     }

@@ -78,11 +78,11 @@ public class MobUtil {
         String mobName = mob.getName();
         int mobLevel = mob.getLevel();
         if (mob instanceof HostileMob) {
-            return Utils.translateColor("&c" + mobName + " &2[Lv." + mobLevel + "]");
+            return Utils.color("&c" + mobName + " &2[Lv." + mobLevel + "]");
         } else if (mob instanceof NeutralMob) {
-            return Utils.translateColor("&6" + mobName + " &2[Lv." + mobLevel + "]");
+            return Utils.color("&6" + mobName + " &2[Lv." + mobLevel + "]");
         } else {
-            return Utils.translateColor("&a" + mobName + " &2[Lv." + mobLevel + "]");
+            return Utils.color("&a" + mobName + " &2[Lv." + mobLevel + "]");
         }
     }
 

@@ -17,7 +17,7 @@ public class Hologram {
         World world = location.getWorld();
         Consumer<AreaEffectCloud> consumer = (hologram) -> {
             hologram.setCustomNameVisible(true);
-            hologram.setCustomName(Utils.translateColor(string));
+            hologram.setCustomName(Utils.color(string));
             hologram.clearCustomEffects();
             hologram.setRadius(0);
             hologram.setParticle(Particle.REDSTONE, new Particle.DustOptions(Color.BLACK, 0));

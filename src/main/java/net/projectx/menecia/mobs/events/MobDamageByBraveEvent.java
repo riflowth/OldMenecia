@@ -81,7 +81,7 @@ public class MobDamageByBraveEvent implements Listener {
             if (mobHealth <= 0) {
                 mobEntity.setHealth(0);
                 int totalDamage = (int) damageMap.get(mobEntity).get(braveEntity.getUniqueId()).doubleValue();
-                braveEntity.sendActionBar(Utils.translateColor("&4You have took " + totalDamage  + " damage point!"));
+                braveEntity.sendActionBar(Utils.color("&4You have took " + totalDamage  + " damage point!"));
                 damageMap.remove(mobEntity);
             } else {
                 mobEntity.setHealth(mobHealth);
