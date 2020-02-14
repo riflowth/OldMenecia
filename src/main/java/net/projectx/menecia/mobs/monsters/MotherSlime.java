@@ -4,6 +4,8 @@ import net.projectx.menecia.mobs.HostileMob;
 import net.projectx.menecia.mobs.ResizableMob;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class MotherSlime implements HostileMob, ResizableMob {
 
@@ -18,7 +20,7 @@ public class MotherSlime implements HostileMob, ResizableMob {
 
     @Override
     public void attack(Player player) {
-
+        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 2, 1, false, false));
     }
 
     @Override

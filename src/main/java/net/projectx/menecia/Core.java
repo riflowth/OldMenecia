@@ -3,6 +3,7 @@ package net.projectx.menecia;
 import net.projectx.menecia.mobs.MobSpawner;
 import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.mobs.events.MobDamageByBraveEvent;
+import net.projectx.menecia.mobs.events.MobDamageEvent;
 import net.projectx.menecia.player.events.GeneralPlayerEvent;
 import net.projectx.menecia.player.events.LevelingEvent;
 import net.projectx.menecia.resources.utilities.Log;
@@ -40,6 +41,7 @@ public class Core extends JavaPlugin {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new GeneralPlayerEvent(this), this);
         pluginManager.registerEvents(new MobDamageByBraveEvent(this), this);
+        pluginManager.registerEvents(new MobDamageEvent(this), this);
         pluginManager.registerEvents(new LevelingEvent(this), this);
     }
 

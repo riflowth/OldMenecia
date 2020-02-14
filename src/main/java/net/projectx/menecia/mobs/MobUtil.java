@@ -1,6 +1,7 @@
 package net.projectx.menecia.mobs;
 
 import net.projectx.menecia.mobs.monsters.BabySlime;
+import net.projectx.menecia.mobs.monsters.MotherSlime;
 import net.projectx.menecia.resources.Keys;
 import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.Location;
@@ -23,6 +24,7 @@ public class MobUtil {
         if (instance == null) {
             instance = new MobUtil();
             instance.mobMap.put(BabySlime.ID, new BabySlime());
+            instance.mobMap.put(MotherSlime.ID, new MotherSlime());
         }
     }
 

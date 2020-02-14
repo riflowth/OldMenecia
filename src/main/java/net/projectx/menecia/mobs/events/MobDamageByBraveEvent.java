@@ -8,10 +8,7 @@ import net.projectx.menecia.player.Brave;
 import net.projectx.menecia.resources.Icons;
 import net.projectx.menecia.resources.utilities.Hologram;
 import net.projectx.menecia.resources.utilities.Utils;
-import org.bukkit.Bukkit;
-import org.bukkit.EntityEffect;
-import org.bukkit.Location;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -74,8 +71,7 @@ public class MobDamageByBraveEvent implements Listener {
     }
 
     private double calculateDamage(Player damager) {
-        if (damager.getInventory().getItemInMainHand().getType().isSolid() ||
-                damager.getInventory().getItemInMainHand().getType().isAir()) {
+        if (damager.getInventory().getItemInMainHand().getType() == Material.WOODEN_SWORD) {
             return 1;
         }
         return 0;
