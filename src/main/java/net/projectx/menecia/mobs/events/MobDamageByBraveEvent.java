@@ -1,7 +1,7 @@
 package net.projectx.menecia.mobs.events;
 
-import net.projectx.menecia.Core;
 import net.projectx.menecia.DataManager;
+import net.projectx.menecia.Menecia;
 import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.player.Brave;
@@ -26,7 +26,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class MobDamageByBraveEvent implements Listener {
 
-    private Core plugin;
+    private Menecia plugin;
     private DataManager dataManager;
     private static final int damageIndicatorShowTick = 20;
     private static final int healthBarScale = 1;
@@ -34,7 +34,7 @@ public class MobDamageByBraveEvent implements Listener {
     private Map<LivingEntity, BossBar> healthBarMap = new HashMap<>();
     private Map<UUID, BossBar> healthBarCache = new HashMap<>();
 
-    public MobDamageByBraveEvent(Core plugin) {
+    public MobDamageByBraveEvent(Menecia plugin) {
         this.plugin = plugin;
         dataManager = plugin.getDataManager();
     }
@@ -42,8 +42,6 @@ public class MobDamageByBraveEvent implements Listener {
     @EventHandler
     private void onEvent(EntityDamageByEntityEvent event) {
         if ((event.getDamager() instanceof Player) && (MobUtil.isMob(event.getEntity()))) {
-            event.setCancelled(true);
-
             Player braveEntity = (Player) event.getDamager();
             Brave brave = dataManager.getBrave(braveEntity);
             Location braveLocation = braveEntity.getLocation();

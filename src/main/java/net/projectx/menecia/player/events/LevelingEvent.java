@@ -1,6 +1,6 @@
 package net.projectx.menecia.player.events;
 
-import net.projectx.menecia.Core;
+import net.projectx.menecia.Menecia;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -9,9 +9,9 @@ import org.bukkit.event.player.PlayerExpChangeEvent;
 
 public class LevelingEvent implements Listener {
 
-    private Core plugin;
+    private Menecia plugin;
 
-    public LevelingEvent(Core plugin) {
+    public LevelingEvent(Menecia plugin) {
         this.plugin = plugin;
     }
 

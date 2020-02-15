@@ -1,29 +1,26 @@
 package net.projectx.menecia.mobs;
 
-import net.projectx.menecia.Core;
+import net.projectx.menecia.Menecia;
 import net.projectx.menecia.resources.utilities.Log;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.SlimeSplitEvent;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MobSpawner implements Listener {
+public class MobSpawner implements Listener{
 
-    private Core plugin;
+    private Menecia plugin;
     private BukkitTask spawnerTask;
     private int maxiumNodeSpawn = 5;
     private Map<Mob, Integer> spawnedCountMap = new HashMap<>();
 
-    public MobSpawner(Core plugin) {
+    public MobSpawner(Menecia plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -32,7 +29,7 @@ public class MobSpawner implements Listener {
         Log.sendSuccess("Started Mob Spawner!");
         Location spawnLocation = Bukkit.getWorlds().get(0).getSpawnLocation();
         spawnerTask = plugin.runTaskTimer(() -> {
-            for (Mob mob : MobUtil.getAllMobs()) {
+            for (Mob mob : MobManager.getAllMobs()) {
                 if (!spawnedCountMap.containsKey(mob)) {
                     spawnedCountMap.put(mob, 0);
                 }
@@ -49,19 +46,10 @@ public class MobSpawner implements Listener {
     @EventHandler
     private void mobDeathEvent(EntityDeathEvent event) {
         Entity entity = event.getEntity();
-        removeMob(entity);
-    }
-
-    @EventHandler
-    private void resetVanillaCombust(EntityCombustEvent event) {
-        if (event.getEntityType() == EntityType.ZOMBIE) {
-            event.setCancelled(true);
+        if (MobUtil.isMob(entity)) {
+            MobUtil.getMobInstance(entity).despawn(entity);
+            removeMob(entity);
         }
-    }
-
-    @EventHandler
-    private void resetVanillaSplitting(SlimeSplitEvent event) {
-        event.setCancelled(true);
     }
 
     public void removeMob(Entity entity) {

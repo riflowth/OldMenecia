@@ -1,9 +1,10 @@
 package net.projectx.menecia;
 
+import net.projectx.menecia.mobs.MobManager;
 import net.projectx.menecia.mobs.MobSpawner;
-import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.mobs.events.MobDamageByBraveEvent;
 import net.projectx.menecia.mobs.events.MobDamageEvent;
+import net.projectx.menecia.mobs.events.ResetVanillaMobEvent;
 import net.projectx.menecia.player.events.GeneralPlayerEvent;
 import net.projectx.menecia.player.events.LevelingEvent;
 import net.projectx.menecia.resources.utilities.Log;
@@ -12,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
-public class Core extends JavaPlugin {
+public class Menecia extends JavaPlugin {
 
     private DataManager dataManager;
     private MobSpawner mobSpawner;
@@ -39,6 +40,7 @@ public class Core extends JavaPlugin {
 
     private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvents(new ResetVanillaMobEvent(), this);
         pluginManager.registerEvents(new GeneralPlayerEvent(this), this);
         pluginManager.registerEvents(new MobDamageByBraveEvent(this), this);
         pluginManager.registerEvents(new MobDamageEvent(this), this);
@@ -50,7 +52,7 @@ public class Core extends JavaPlugin {
     }
 
     private void registerMobSystem() {
-        MobUtil.registerMobs();
+        MobManager.registerMobs(this);
         mobSpawner = new MobSpawner(this);
         mobSpawner.clearAllMobs();
         mobSpawner.start();
