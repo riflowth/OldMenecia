@@ -1,4 +1,4 @@
-package net.projectx.menecia.mobs.events;
+package net.projectx.menecia.player.events;
 
 import net.projectx.menecia.DataManager;
 import net.projectx.menecia.Menecia;
@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class MobDamageByBraveEvent implements Listener {
+public class BraveDamageEvent implements Listener {
 
     private Menecia plugin;
     private DataManager dataManager;
@@ -34,7 +34,7 @@ public class MobDamageByBraveEvent implements Listener {
     private Map<LivingEntity, BossBar> healthBarMap = new HashMap<>();
     private Map<UUID, BossBar> healthBarCache = new HashMap<>();
 
-    public MobDamageByBraveEvent(Menecia plugin) {
+    public BraveDamageEvent(Menecia plugin) {
         this.plugin = plugin;
         dataManager = plugin.getDataManager();
     }
@@ -48,6 +48,9 @@ public class MobDamageByBraveEvent implements Listener {
             LivingEntity mobEntity = (LivingEntity) event.getEntity();
             Mob mob = MobUtil.getMobInstance(mobEntity);
             Location mobLocation = mobEntity.getLocation();
+
+            //TODO: Attack Range
+            if (checkDistance(braveEntity, mobEntity) > 2) return;
 
             double damage = calculateDamage(braveEntity);
             updateDamage(braveEntity, mobEntity, damage);
@@ -66,6 +69,10 @@ public class MobDamageByBraveEvent implements Listener {
                 showHealthBar(braveEntity, mobEntity);
             }
         }
+    }
+
+    private double checkDistance(Player player, Entity entity) {
+        return player.getLocation().distance(entity.getLocation());
     }
 
     private double calculateDamage(Player damager) {

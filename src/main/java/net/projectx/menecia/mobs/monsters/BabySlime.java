@@ -40,7 +40,6 @@ public class BabySlime implements Mob {
 
     @Override
     public void despawn(Entity entity) {
-        entity.getPassengers().forEach(Entity::remove);
     }
 
     @Override
