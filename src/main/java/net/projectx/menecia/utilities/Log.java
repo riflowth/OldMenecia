@@ -1,4 +1,4 @@
-package net.projectx.menecia.resources.utilities;
+package net.projectx.menecia.utilities;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;

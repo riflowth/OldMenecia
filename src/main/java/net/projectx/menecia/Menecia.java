@@ -3,12 +3,13 @@ package net.projectx.menecia;
 import net.projectx.menecia.mobs.MobManager;
 import net.projectx.menecia.mobs.MobSpawner;
 import net.projectx.menecia.mobs.events.MobDamageEvent;
+import net.projectx.menecia.mobs.events.MobMoveEvent;
 import net.projectx.menecia.mobs.events.ResetVanillaMobEvent;
 import net.projectx.menecia.player.events.BraveDamageEvent;
 import net.projectx.menecia.player.events.GeneralPlayerEvent;
 import net.projectx.menecia.player.events.LevelingEvent;
 import net.projectx.menecia.player.events.ResetVanillaPlayerEvent;
-import net.projectx.menecia.resources.utilities.Log;
+import net.projectx.menecia.utilities.Log;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -46,6 +47,7 @@ public class Menecia extends JavaPlugin {
         pluginManager.registerEvents(new GeneralPlayerEvent(this), this);
         pluginManager.registerEvents(new BraveDamageEvent(this), this);
         pluginManager.registerEvents(new MobDamageEvent(this), this);
+        pluginManager.registerEvents(new MobMoveEvent(), this);
         pluginManager.registerEvents(new LevelingEvent(this), this);
     }
 

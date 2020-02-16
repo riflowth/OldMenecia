@@ -1,7 +1,7 @@
 package net.projectx.menecia;
 
 import net.projectx.menecia.player.Brave;
-import net.projectx.menecia.resources.utilities.Log;
+import net.projectx.menecia.utilities.Log;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -32,6 +32,5 @@ public class DataManager {
     public Brave getBrave(Player player) {
         return braveMap.get(player.getUniqueId());
     }
-
 
 }

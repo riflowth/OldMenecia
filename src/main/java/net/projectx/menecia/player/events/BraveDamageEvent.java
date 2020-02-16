@@ -6,8 +6,8 @@ import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.player.Brave;
 import net.projectx.menecia.resources.Icons;
-import net.projectx.menecia.resources.utilities.Hologram;
-import net.projectx.menecia.resources.utilities.Utils;
+import net.projectx.menecia.utilities.Hologram;
+import net.projectx.menecia.utilities.Utils;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -105,9 +105,8 @@ public class BraveDamageEvent implements Listener {
             if (healthBarCache.get(braveEntity.getUniqueId()) != newHealthBar) {
                 healthBarCache.get(braveEntity.getUniqueId()).removePlayer(braveEntity);
             }
-        } else {
-            healthBarCache.put(braveEntity.getUniqueId(), newHealthBar);
         }
+        healthBarCache.put(braveEntity.getUniqueId(), newHealthBar);
     }
 
     private void updateHealthBar(LivingEntity mobEntity) {

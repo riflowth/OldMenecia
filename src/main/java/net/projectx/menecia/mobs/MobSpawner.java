@@ -1,9 +1,12 @@
 package net.projectx.menecia.mobs;
 
 import net.projectx.menecia.Menecia;
-import net.projectx.menecia.resources.utilities.Log;
+import net.projectx.menecia.locations.Area;
+import net.projectx.menecia.utilities.Log;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +23,11 @@ public class MobSpawner implements Listener{
     private int maxiumNodeSpawn = 5;
     private Map<Mob, Integer> spawnedCountMap = new HashMap<>();
 
+    private static final World world = Bukkit.getWorlds().get(0);
+    private static final Location firstLocation = new Location(world, -378, 69, -336);
+    private static final Location secondLocation = new Location(world, -383, 70, -324);
+    public static final Area spawnArea = new Area(firstLocation, secondLocation);
+
     public MobSpawner(Menecia plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -27,11 +35,14 @@ public class MobSpawner implements Listener{
 
     public void start() {
         Log.sendSuccess("Started Mob Spawner!");
-        Location spawnLocation = Bukkit.getWorlds().get(0).getSpawnLocation();
         spawnerTask = plugin.runTaskTimer(() -> {
             for (Mob mob : MobManager.getAllMobs()) {
                 spawnedCountMap.putIfAbsent(mob, 0);
                 if (spawnedCountMap.get(mob) < maxiumNodeSpawn) {
+                    Location spawnLocation = spawnArea.getRandomLocation();
+                    while (spawnLocation.getBlock().getType() != Material.AIR) {
+                        spawnLocation.add(0, 1, 0);
+                    }
                     MobUtil.spawn(mob, spawnLocation);
                     spawnedCountMap.put(mob, spawnedCountMap.get(mob) + 1);
                     Log.sendSuccess("Spawned 1 " + MobUtil.getDisplayNameWithLevel(mob)
