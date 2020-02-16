@@ -30,9 +30,7 @@ public class MobSpawner implements Listener{
         Location spawnLocation = Bukkit.getWorlds().get(0).getSpawnLocation();
         spawnerTask = plugin.runTaskTimer(() -> {
             for (Mob mob : MobManager.getAllMobs()) {
-                if (!spawnedCountMap.containsKey(mob)) {
-                    spawnedCountMap.put(mob, 0);
-                }
+                spawnedCountMap.putIfAbsent(mob, 0);
                 if (spawnedCountMap.get(mob) < maxiumNodeSpawn) {
                     MobUtil.spawn(mob, spawnLocation);
                     spawnedCountMap.put(mob, spawnedCountMap.get(mob) + 1);

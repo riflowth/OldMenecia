@@ -71,10 +71,6 @@ public class BraveDamageEvent implements Listener {
         }
     }
 
-    private double checkDistance(Player player, Entity entity) {
-        return player.getLocation().distance(entity.getLocation());
-    }
-
     private double calculateDamage(Player damager) {
         if (damager.getInventory().getItemInMainHand().getType() == Material.WOODEN_SWORD) {
             return 1;
@@ -89,39 +85,40 @@ public class BraveDamageEvent implements Listener {
     private void updateDamage(Player braveEntity, LivingEntity mobEntity, double damage) {
         damageMap.putIfAbsent(mobEntity, new HashMap<UUID, Double>() {{ put(braveEntity.getUniqueId(), 0D); }});
         Map<UUID, Double> braveDamagingMap = damageMap.get(mobEntity);
-        braveDamagingMap.putIfAbsent(braveEntity.getUniqueId(), damage);
-        double latestDamage = braveDamagingMap.get(braveEntity.getUniqueId());
-        braveDamagingMap.put(braveEntity.getUniqueId(), latestDamage + damage);
+        braveDamagingMap.merge(braveEntity.getUniqueId(), damage, Double::sum);
     }
 
-    private void updateHealthBar(LivingEntity mobEntity) {
-        double mobMaxHealth = MobUtil.getMobInstance(mobEntity).getMaxHealth();
-        double mobHealth = mobEntity.getHealth();
-        double healthBarValue = (mobHealth / mobMaxHealth) * healthBarScale;
-        if (mobHealth <= 0) healthBarValue = 0;
-        BossBar healthBar = healthBarMap.get(mobEntity);
-        healthBar.setProgress(healthBarValue);
-        String mobDisplayName = MobUtil.getDisplayNameWithLevel(MobUtil.getMobInstance(mobEntity));
-        int health = (int) mobEntity.getHealth();
-        String display = Utils.color(mobDisplayName + " &f- &c" + health + " &4" + Icons.RED_HEART);
-        healthBar.setTitle(display);
+    private double checkDistance(Player player, Entity entity) {
+        return player.getLocation().distance(entity.getLocation());
     }
 
     private void showHealthBar(Player braveEntity, LivingEntity mobEntity) {
         healthBarMap.putIfAbsent(mobEntity, createHealthBar(mobEntity));
         BossBar healthBar = healthBarMap.get(mobEntity);
-        cacheHealthBar(braveEntity, healthBar);
+        cacheHealthBarForPlayer(braveEntity, healthBar);
         if (!healthBar.getPlayers().contains(braveEntity)) healthBar.addPlayer(braveEntity);
         updateHealthBar(mobEntity);
     }
 
-    private void cacheHealthBar(Player braveEntity, BossBar newHealthBar) {
+    private void cacheHealthBarForPlayer(Player braveEntity, BossBar newHealthBar) {
         if (healthBarCache.get(braveEntity.getUniqueId()) != null) {
             if (healthBarCache.get(braveEntity.getUniqueId()) != newHealthBar) {
                 healthBarCache.get(braveEntity.getUniqueId()).removePlayer(braveEntity);
             }
+        } else {
+            healthBarCache.put(braveEntity.getUniqueId(), newHealthBar);
         }
-        healthBarCache.put(braveEntity.getUniqueId(), newHealthBar);
+    }
+
+    private void updateHealthBar(LivingEntity mobEntity) {
+        BossBar healthBar = healthBarMap.get(mobEntity);
+        double mobMaxHealth = MobUtil.getMobInstance(mobEntity).getMaxHealth();
+        double mobHealth = mobEntity.getHealth();
+        double healthBarValue = (mobHealth / mobMaxHealth) * healthBarScale;
+        if (mobHealth <= 0) healthBarValue = 0;
+        healthBar.setProgress(healthBarValue);
+        String mobDisplayName = MobUtil.getDisplayNameWithLevel(MobUtil.getMobInstance(mobEntity));
+        healthBar.setTitle(Utils.color(mobDisplayName + " &f- &c" + (int) mobHealth + " &4" + Icons.RED_HEART));
     }
 
     private BossBar createHealthBar(LivingEntity mobEntity) {
