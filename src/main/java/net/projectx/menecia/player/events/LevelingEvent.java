@@ -16,12 +16,12 @@ public class LevelingEvent implements Listener {
     }
 
     @EventHandler
-    private void braveReceivedExp(PlayerExpChangeEvent event) {
+    private void playerReceivedExp(PlayerExpChangeEvent event) {
         // TODO: Exp mechanism
     }
 
     @EventHandler
-    private void mobDamageByBrave(EntityDamageByEntityEvent event) {
+    private void mobDamageByPlayer(EntityDamageByEntityEvent event) {
         // TODO: Exp mechanism
     }
 

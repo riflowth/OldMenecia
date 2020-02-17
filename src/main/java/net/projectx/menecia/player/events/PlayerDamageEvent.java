@@ -3,8 +3,8 @@ package net.projectx.menecia.player.events;
 import net.projectx.menecia.Menecia;
 import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.MobUtil;
-import net.projectx.menecia.player.Brave;
-import net.projectx.menecia.player.BraveManager;
+import net.projectx.menecia.player.PlayerWrapper;
+import net.projectx.menecia.player.PlayerManager;
 import net.projectx.menecia.managers.MobHealthBarManager;
 import net.projectx.menecia.resources.Icons;
 import net.projectx.menecia.utilities.Hologram;
@@ -25,48 +25,48 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class BraveDamageEvent implements Listener {
+public class PlayerDamageEvent implements Listener {
 
     private Menecia plugin;
-    private BraveManager braveManager;
+    private PlayerManager playerManager;
     private MobHealthBarManager mobHealthBarManager;
     private static final int damageIndicatorShowTick = 20;
     private Map<LivingEntity, Map<UUID, Double>> damageMap = new HashMap<>();
 
-    public BraveDamageEvent(Menecia plugin) {
+    public PlayerDamageEvent(Menecia plugin) {
         this.plugin = plugin;
-        braveManager = plugin.getDataManager().getBraveManager();
+        playerManager = plugin.getDataManager().getPlayerManager();
         mobHealthBarManager = plugin.getDataManager().getMobHealthBarManager();
     }
 
     @EventHandler
     private void onEvent(EntityDamageByEntityEvent event) {
         if ((event.getDamager() instanceof Player) && (MobUtil.isMob(event.getEntity()))) {
-            Player braveEntity = (Player) event.getDamager();
-            Brave brave = braveManager.getBrave(braveEntity);
-            Location braveLocation = braveEntity.getLocation();
+            Player player = (Player) event.getDamager();
+            PlayerWrapper playerWrapper = playerManager.getPlayerWrapper(player);
+            Location playerLocation = player.getLocation();
             LivingEntity mobEntity = (LivingEntity) event.getEntity();
             Mob mob = MobUtil.getMobInstance(mobEntity);
             Location mobLocation = mobEntity.getLocation();
 
             //TODO: Attack Range
-            if (checkDistance(braveEntity, mobEntity) > 2) return;
+            if (checkDistance(player, mobEntity) > 2) return;
 
-            double damage = calculateDamage(braveEntity);
-            updateDamage(braveEntity, mobEntity, damage);
+            double damage = calculateDamage(player);
+            updateDamage(player, mobEntity, damage);
             displayDamageEffect(mobEntity);
             displayDamageIndicator(damage, mobLocation);
-            takeKnockback(mobEntity, braveEntity);
+            takeKnockback(mobEntity, player);
 
             double mobHealth = mobEntity.getHealth();
             mobHealth -= damage;
             if (mobHealth <= 0) {
-                int totalDamage = (int) getTotalDamage(mobEntity, braveEntity);
-                braveEntity.sendActionBar(Utils.color("&4You have took " + totalDamage  + " damage point!"));
+                int totalDamage = (int) getTotalDamage(mobEntity, player);
+                player.sendActionBar(Utils.color("&4You have took " + totalDamage  + " damage point!"));
                 killMob(mobEntity);
             } else {
                 mobEntity.setHealth(mobHealth);
-                mobHealthBarManager.showHealthBar(braveEntity, mobEntity);
+                mobHealthBarManager.showHealthBar(player, mobEntity);
             }
         }
     }
@@ -78,14 +78,14 @@ public class BraveDamageEvent implements Listener {
         return 0;
     }
 
-    private double getTotalDamage(LivingEntity mobEntity, Player braveEntity) {
-        return damageMap.get(mobEntity).get(braveEntity.getUniqueId());
+    private double getTotalDamage(LivingEntity mobEntity, Player player) {
+        return damageMap.get(mobEntity).get(player.getUniqueId());
     }
 
-    private void updateDamage(Player braveEntity, LivingEntity mobEntity, double damage) {
-        damageMap.putIfAbsent(mobEntity, new HashMap<UUID, Double>() {{ put(braveEntity.getUniqueId(), 0D); }});
-        Map<UUID, Double> braveDamagingMap = damageMap.get(mobEntity);
-        braveDamagingMap.merge(braveEntity.getUniqueId(), damage, Double::sum);
+    private void updateDamage(Player player, LivingEntity mobEntity, double damage) {
+        damageMap.putIfAbsent(mobEntity, new HashMap<UUID, Double>() {{ put(player.getUniqueId(), 0D); }});
+        Map<UUID, Double> playerDamagingMap = damageMap.get(mobEntity);
+        playerDamagingMap.merge(player.getUniqueId(), damage, Double::sum);
     }
 
     private double checkDistance(Player player, Entity entity) {

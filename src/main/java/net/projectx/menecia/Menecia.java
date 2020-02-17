@@ -5,7 +5,7 @@ import net.projectx.menecia.mobs.MobSpawner;
 import net.projectx.menecia.mobs.events.MobDamageEvent;
 import net.projectx.menecia.mobs.events.MobMoveEvent;
 import net.projectx.menecia.mobs.events.ResetVanillaMobEvent;
-import net.projectx.menecia.player.events.BraveDamageEvent;
+import net.projectx.menecia.player.events.PlayerDamageEvent;
 import net.projectx.menecia.player.events.GeneralPlayerEvent;
 import net.projectx.menecia.player.events.LevelingEvent;
 import net.projectx.menecia.player.events.ResetVanillaPlayerEvent;
@@ -45,7 +45,7 @@ public class Menecia extends JavaPlugin {
         pluginManager.registerEvents(new ResetVanillaPlayerEvent(), this);
         pluginManager.registerEvents(new ResetVanillaMobEvent(), this);
         pluginManager.registerEvents(new GeneralPlayerEvent(this), this);
-        pluginManager.registerEvents(new BraveDamageEvent(this), this);
+        pluginManager.registerEvents(new PlayerDamageEvent(this), this);
         pluginManager.registerEvents(new MobDamageEvent(this), this);
         pluginManager.registerEvents(new MobMoveEvent(), this);
         pluginManager.registerEvents(new LevelingEvent(this), this);

@@ -22,20 +22,20 @@ public class MobHealthBarManager {
         this.plugin = plugin;
     }
 
-    public void showHealthBar(Player braveEntity, LivingEntity mobEntity) {
+    public void showHealthBar(Player player, LivingEntity mobEntity) {
         healthBarMap.putIfAbsent(mobEntity, new MobHealthBar(mobEntity));
         MobHealthBar mobHealthBar = healthBarMap.get(mobEntity);
-        cacheHealthBarForPlayer(braveEntity, mobHealthBar);
-        if (!mobHealthBar.hasShowTo(braveEntity)) mobHealthBar.show(braveEntity);
+        cacheHealthBarForPlayer(player, mobHealthBar);
+        if (!mobHealthBar.hasShowTo(player)) mobHealthBar.show(player);
         mobHealthBar.update();
-        updateMobHealBarTask(braveEntity, mobHealthBar);
+        updateMobHealBarTask(player, mobHealthBar);
     }
 
-    public void updateMobHealBarTask(Player braveEntity, MobHealthBar mobHealthBar) {
-        if (taskMap.get(braveEntity.getUniqueId()) != null) taskMap.get(braveEntity.getUniqueId()).cancel();
-        MobHealthBarTask mobHealthBarTask = new MobHealthBarTask(braveEntity.getUniqueId(), mobHealthBar);
+    public void updateMobHealBarTask(Player player, MobHealthBar mobHealthBar) {
+        if (taskMap.get(player.getUniqueId()) != null) taskMap.get(player.getUniqueId()).cancel();
+        MobHealthBarTask mobHealthBarTask = new MobHealthBarTask(player.getUniqueId(), mobHealthBar);
         mobHealthBarTask.runTaskTimerAsynchronously(plugin, 0, Utils.TICK_PER_SEC);
-        taskMap.put(braveEntity.getUniqueId(), mobHealthBarTask);
+        taskMap.put(player.getUniqueId(), mobHealthBarTask);
     }
 
     public void removeHealthBar(LivingEntity mobEntity) {
@@ -43,13 +43,13 @@ public class MobHealthBarManager {
         healthBarMap.remove(mobEntity);
     }
 
-    private void cacheHealthBarForPlayer(Player braveEntity, MobHealthBar newHealthBar) {
-        if (healthBarCache.get(braveEntity.getUniqueId()) != null) {
-            if (healthBarCache.get(braveEntity.getUniqueId()) != newHealthBar) {
-                healthBarCache.get(braveEntity.getUniqueId()).hide(braveEntity);
+    private void cacheHealthBarForPlayer(Player player, MobHealthBar newHealthBar) {
+        if (healthBarCache.get(player.getUniqueId()) != null) {
+            if (healthBarCache.get(player.getUniqueId()) != newHealthBar) {
+                healthBarCache.get(player.getUniqueId()).hide(player);
             }
         }
-        healthBarCache.put(braveEntity.getUniqueId(), newHealthBar);
+        healthBarCache.put(player.getUniqueId(), newHealthBar);
     }
 
 }

@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class Brave {
+public class PlayerWrapper {
 
     private UUID uuid;
     private boolean isStunned = false;
@@ -13,7 +13,7 @@ public class Brave {
     private boolean isFreeze = false;
     private boolean isDying = false;
 
-    public Brave(Player player) {
+    public PlayerWrapper(Player player) {
         uuid = player.getUniqueId();
     }
 
