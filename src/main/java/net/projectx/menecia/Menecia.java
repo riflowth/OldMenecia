@@ -52,7 +52,7 @@ public class Menecia extends JavaPlugin {
     }
 
     private void registerManagers() {
-        dataManager = new DataManager();
+        dataManager = new DataManager(this);
     }
 
     private void registerMobSystem() {
@@ -63,6 +63,7 @@ public class Menecia extends JavaPlugin {
     }
 
     private void unregisterAll() {
+        dataManager = null;
         mobSpawner.stop();
         mobSpawner = null;
     }

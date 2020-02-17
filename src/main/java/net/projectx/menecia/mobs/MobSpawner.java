@@ -3,6 +3,7 @@ package net.projectx.menecia.mobs;
 import net.projectx.menecia.Menecia;
 import net.projectx.menecia.locations.Area;
 import net.projectx.menecia.utilities.Log;
+import net.projectx.menecia.utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -49,7 +50,7 @@ public class MobSpawner implements Listener{
                             + " &6(" + spawnedCountMap.get(mob) + "/" + maxiumNodeSpawn + ")");
                 }
             }
-        }, 0, 10 * 20L);
+        }, 0, Utils.TICK_PER_SEC * 10);
     }
 
     @EventHandler

@@ -2,6 +2,7 @@ package net.projectx.menecia.mobs.monsters;
 
 import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.MobType;
+import net.projectx.menecia.utilities.Utils;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -66,7 +67,7 @@ public class MotherSlime implements Mob {
 
     @Override
     public void attack(Player player) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 2, 1, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Utils.TICK_PER_SEC * 2, 1, false, false));
     }
 
     @Override

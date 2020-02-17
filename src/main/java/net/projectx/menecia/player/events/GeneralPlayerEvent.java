@@ -2,7 +2,7 @@ package net.projectx.menecia.player.events;
 
 import net.md_5.bungee.api.ChatColor;
 import net.projectx.menecia.Menecia;
-import net.projectx.menecia.DataManager;
+import net.projectx.menecia.player.BraveManager;
 import net.projectx.menecia.utilities.Utils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,20 +12,20 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class GeneralPlayerEvent implements Listener {
 
-    private DataManager dataManager;
+    private BraveManager braveManager;
 
     public GeneralPlayerEvent(Menecia plugin) {
-        dataManager = plugin.getDataManager();
+        braveManager = plugin.getDataManager().getBraveManager();
     }
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
-        dataManager.addBrave(event.getPlayer());
+        braveManager.addBrave(event.getPlayer());
     }
 
     @EventHandler
     private void onPlayerQuit(PlayerQuitEvent event) {
-        dataManager.removeBrave(event.getPlayer());
+        braveManager.removeBrave(event.getPlayer());
     }
 
     @EventHandler

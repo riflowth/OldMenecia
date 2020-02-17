@@ -1,36 +1,26 @@
 package net.projectx.menecia;
 
-import net.projectx.menecia.player.Brave;
+import net.projectx.menecia.player.BraveManager;
+import net.projectx.menecia.managers.MobHealthBarManager;
 import net.projectx.menecia.utilities.Log;
-import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class DataManager {
 
-    private Map<UUID, Brave> braveMap = new HashMap<>();
+    private BraveManager braveManager;
+    private MobHealthBarManager mobHealthBarManager;
 
-    DataManager() {
+    DataManager(Menecia plugin) {
+        braveManager = new BraveManager();
+        mobHealthBarManager = new MobHealthBarManager(plugin);
         Log.sendSuccess("DataManager has created");
     }
 
-    public void addBrave(Player player) {
-        braveMap.put(player.getUniqueId(), registerBrave(player));
-        Log.sendSuccess("Added Brave named &f" + player.getName());
+    public BraveManager getBraveManager() {
+        return braveManager;
     }
 
-    private Brave registerBrave(Player player) {
-        return new Brave(player);
-    }
-
-    public void removeBrave(Player player) {
-        braveMap.remove(player.getUniqueId());
-    }
-
-    public Brave getBrave(Player player) {
-        return braveMap.get(player.getUniqueId());
+    public MobHealthBarManager getMobHealthBarManager() {
+        return mobHealthBarManager;
     }
 
 }
