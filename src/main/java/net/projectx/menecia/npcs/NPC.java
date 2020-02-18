@@ -1,15 +1,27 @@
-package net.projectx.menecia.resources.fakeplayer;
+package net.projectx.menecia.npcs;
 
 import com.comphenix.protocol.wrappers.*;
+import net.projectx.menecia.packets.ServerNamedEntitySpawn;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class FakePlayer {
+public class NPC {
 
     private WrappedGameProfile gameProfile;
     private String displayName;
     private EnumWrappers.NativeGameMode gameMode;
     private int latency;
+
+    public void spawn(Player player,  Location location) {
+        ServerNamedEntitySpawn packet = new ServerNamedEntitySpawn();
+        packet.setEntityID(ThreadLocalRandom.current().nextInt());
+        packet.setPlayerUUID(gameProfile.getUUID());
+        packet.setLocation(location);
+        packet.sendPacket(player);
+    }
 
     public PlayerInfoData getPlayerInfoData() {
         return new PlayerInfoData(gameProfile, latency, gameMode, WrappedChatComponent.fromText(displayName));

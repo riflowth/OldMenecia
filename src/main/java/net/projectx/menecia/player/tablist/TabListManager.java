@@ -4,8 +4,8 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.PlayerInfoData;
 import net.projectx.menecia.Menecia;
 import net.projectx.menecia.resources.SkinData;
-import net.projectx.menecia.resources.fakeplayer.FakePlayer;
-import net.projectx.menecia.resources.fakeplayer.FakePlayerBuilder;
+import net.projectx.menecia.npcs.NPC;
+import net.projectx.menecia.npcs.NPCBuilder;
 import net.projectx.menecia.utilities.Utils;
 import org.bukkit.entity.Player;
 
@@ -25,7 +25,7 @@ public class TabListManager {
                 Utils.color("&f&lMenecia\n&7(The MMORPG Minecraft Server)")
         );
 
-        FakePlayer header = new FakePlayerBuilder()
+        NPC header = new NPCBuilder()
                 .setGameProfile(" " + 1)
                 .setDisplayName("")
                 .setGameMode(EnumWrappers.NativeGameMode.NOT_SET)
@@ -43,16 +43,16 @@ public class TabListManager {
         }
 
         List<PlayerInfoData> playerInfoDataList = new ArrayList<>();
-        FakePlayerBuilder builder = new FakePlayerBuilder();
+        NPCBuilder builder = new NPCBuilder();
         for (int i = 2; i <= 80; i++) {
-            FakePlayer fakePlayer = builder
+            NPC NPC = builder
                     .setGameProfile(" " + i)
                     .setDisplayName("")
                     .setGameMode(EnumWrappers.NativeGameMode.NOT_SET)
                     .setLatency(0)
                     .setSkin(SkinData.DEFAULT_VALUE, SkinData.DEFAULT_SIGNATURE)
                     .build();
-            playerInfoDataList.add(fakePlayer.getPlayerInfoData());
+            playerInfoDataList.add(NPC.getPlayerInfoData());
         }
         TabListUtil.show(playerInfoDataList, player);
     }

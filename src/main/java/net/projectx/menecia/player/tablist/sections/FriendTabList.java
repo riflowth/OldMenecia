@@ -3,8 +3,8 @@ package net.projectx.menecia.player.tablist.sections;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import net.projectx.menecia.player.tablist.TabListUtil;
 import net.projectx.menecia.resources.SkinData;
-import net.projectx.menecia.resources.fakeplayer.FakePlayer;
-import net.projectx.menecia.resources.fakeplayer.FakePlayerBuilder;
+import net.projectx.menecia.npcs.NPC;
+import net.projectx.menecia.npcs.NPCBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -31,7 +31,7 @@ public class FriendTabList implements TabListSection {
 
     @Override
     public void addTitle(Player player) {
-        FakePlayer header = new FakePlayerBuilder()
+        NPC header = new NPCBuilder()
                 .setGameProfile(" " + positions[0])
                 .setDisplayName(title)
                 .setGameMode(EnumWrappers.NativeGameMode.NOT_SET)
@@ -49,7 +49,7 @@ public class FriendTabList implements TabListSection {
         counter++;
         friendList.put(counter, friend.getUniqueId());
 
-        FakePlayer header = new FakePlayerBuilder()
+        NPC header = new NPCBuilder()
                 .setGameProfile(" " + positions[0])
                 .setDisplayName(title)
                 .setGameMode(EnumWrappers.NativeGameMode.NOT_SET)
