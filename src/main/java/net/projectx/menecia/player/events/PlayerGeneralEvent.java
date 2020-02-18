@@ -3,7 +3,9 @@ package net.projectx.menecia.player.events;
 import net.md_5.bungee.api.ChatColor;
 import net.projectx.menecia.Menecia;
 import net.projectx.menecia.player.PlayerManager;
+import net.projectx.menecia.player.tablist.TabListManager;
 import net.projectx.menecia.utilities.Utils;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -12,15 +14,19 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerGeneralEvent implements Listener {
 
+    private Menecia plugin;
     private PlayerManager playerManager;
 
     public PlayerGeneralEvent(Menecia plugin) {
+        this.plugin = plugin;
         playerManager = plugin.getDataManager().getPlayerManager();
     }
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
-        playerManager.add(event.getPlayer());
+        Player player = event.getPlayer();
+        playerManager.add(player);
+        TabListManager.initialize(player, plugin);
     }
 
     @EventHandler
