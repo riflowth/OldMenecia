@@ -10,11 +10,11 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class GeneralPlayerEvent implements Listener {
+public class PlayerGeneralEvent implements Listener {
 
     private PlayerManager playerManager;
 
-    public GeneralPlayerEvent(Menecia plugin) {
+    public PlayerGeneralEvent(Menecia plugin) {
         playerManager = plugin.getDataManager().getPlayerManager();
     }
 
