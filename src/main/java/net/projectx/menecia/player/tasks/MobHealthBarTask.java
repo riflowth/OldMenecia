@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public class MobHealthBarTask extends BukkitRunnable {
 
+    // TODO: Public Task (List<UUID> for play who need to update)
+
     private int maximumTimeInSec = 10;
     private UUID playerUuid;
     private MobHealthBar mobHealthBar;
