@@ -1,6 +1,7 @@
-package net.projectx.menecia.mobs;
+package net.projectx.menecia.managers;
 
 import net.projectx.menecia.Menecia;
+import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.monsters.BabySlime;
 import net.projectx.menecia.mobs.monsters.MotherSlime;
 
