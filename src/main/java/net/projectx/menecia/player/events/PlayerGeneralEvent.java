@@ -26,7 +26,7 @@ public class PlayerGeneralEvent implements Listener {
     private void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         playerManager.add(player);
-        TabListManager.initialize(player, plugin);
+        TabListManager.initialize(player);
     }
 
     @EventHandler
