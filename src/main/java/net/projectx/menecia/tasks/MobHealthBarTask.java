@@ -1,4 +1,4 @@
-package net.projectx.menecia.player.tasks;
+package net.projectx.menecia.tasks;
 
 import net.projectx.menecia.player.bossbars.MobHealthBar;
 import org.bukkit.scheduler.BukkitRunnable;
