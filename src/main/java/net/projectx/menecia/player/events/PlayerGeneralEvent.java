@@ -3,7 +3,7 @@ package net.projectx.menecia.player.events;
 import net.md_5.bungee.api.ChatColor;
 import net.projectx.menecia.Menecia;
 import net.projectx.menecia.player.PlayerManager;
-import net.projectx.menecia.player.tablist.TabListManager;
+import net.projectx.menecia.player.TabListManager;
 import net.projectx.menecia.utilities.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

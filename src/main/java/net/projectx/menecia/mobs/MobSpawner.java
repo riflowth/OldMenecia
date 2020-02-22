@@ -17,7 +17,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MobSpawner implements Listener{
+public class MobSpawner implements Listener {
 
     private Menecia plugin;
     private BukkitTask spawnerTask;
@@ -71,13 +71,6 @@ public class MobSpawner implements Listener{
         }
     }
 
-    public void clearAllMobs() {
-        for (Entity entity : Bukkit.getWorlds().get(0).getEntities()) {
-            if (MobUtil.isMob(entity)) {
-                entity.remove();
-            }
-        }
-    }
 
     public void stop() {
         spawnerTask.cancel();

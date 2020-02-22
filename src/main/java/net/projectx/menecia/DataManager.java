@@ -1,7 +1,7 @@
 package net.projectx.menecia;
 
 import net.projectx.menecia.player.PlayerManager;
-import net.projectx.menecia.managers.MobHealthBarManager;
+import net.projectx.menecia.mobs.healthbar.MobHealthBarManager;
 import net.projectx.menecia.utilities.Log;
 
 public class DataManager {

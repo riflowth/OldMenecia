@@ -5,7 +5,7 @@ import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.player.PlayerWrapper;
 import net.projectx.menecia.player.PlayerManager;
-import net.projectx.menecia.managers.MobHealthBarManager;
+import net.projectx.menecia.mobs.healthbar.MobHealthBarManager;
 import net.projectx.menecia.resources.Icons;
 import net.projectx.menecia.utilities.Hologram;
 import net.projectx.menecia.utilities.Utils;

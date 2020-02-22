@@ -1,5 +1,6 @@
 package net.projectx.menecia;
 
+import net.projectx.menecia.configs.MobSpawnerConfig;
 import net.projectx.menecia.mobs.MobManager;
 import net.projectx.menecia.mobs.MobSpawner;
 import net.projectx.menecia.mobs.events.MobDamageEvent;
@@ -9,6 +10,7 @@ import net.projectx.menecia.player.events.PlayerDamageEvent;
 import net.projectx.menecia.player.events.PlayerGeneralEvent;
 import net.projectx.menecia.player.events.PlayerLevelingEvent;
 import net.projectx.menecia.player.events.ResetVanillaPlayerEvent;
+import net.projectx.menecia.player.guis.GUIListener;
 import net.projectx.menecia.utilities.Log;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,11 +21,13 @@ public class Menecia extends JavaPlugin {
 
     private DataManager dataManager;
     private MobSpawner mobSpawner;
+    private MobSpawnerConfig mobSpawnerConfig;
 
     @Override
     public void onEnable() {
         Log.sendHeaderBanner();
 
+        registerConfigs();
         registerManagers();
         registerMobSystem();
         registerEvents();
@@ -40,10 +44,20 @@ public class Menecia extends JavaPlugin {
         Log.sendFooterBanner();
     }
 
+    private void registerConfigs() {
+        mobSpawnerConfig = new MobSpawnerConfig(this);
+        mobSpawnerConfig.initialize();
+    }
+
+    public MobSpawnerConfig getMobSpawnerConfig() {
+        return mobSpawnerConfig;
+    }
+
     private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new ResetVanillaPlayerEvent(), this);
         pluginManager.registerEvents(new ResetVanillaMobEvent(), this);
+        pluginManager.registerEvents(new GUIListener(), this);
         pluginManager.registerEvents(new PlayerGeneralEvent(this), this);
         pluginManager.registerEvents(new PlayerDamageEvent(this), this);
         pluginManager.registerEvents(new MobDamageEvent(this), this);
@@ -56,7 +70,7 @@ public class Menecia extends JavaPlugin {
     }
 
     private void registerMobSystem() {
-        MobManager.registerMobs(this);
+        MobManager.registerMobs();
         mobSpawner = new MobSpawner(this);
         mobSpawner.clearAllMobs();
         mobSpawner.start();
@@ -66,6 +80,8 @@ public class Menecia extends JavaPlugin {
         dataManager = null;
         mobSpawner.stop();
         mobSpawner = null;
+        mobSpawnerConfig.destroy();
+        mobSpawnerConfig = null;
     }
 
     public BukkitScheduler getScheduler() {

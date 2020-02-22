@@ -1,6 +1,5 @@
-package net.projectx.menecia.managers;
+package net.projectx.menecia.player;
 
-import net.projectx.menecia.player.PlayerWrapper;
 import net.projectx.menecia.utilities.Log;
 import org.bukkit.entity.Player;
 

@@ -1,4 +1,4 @@
-package net.projectx.menecia.managers;
+package net.projectx.menecia.player;
 
 import net.projectx.menecia.utilities.Utils;
 import org.bukkit.entity.Player;
