@@ -14,15 +14,15 @@ public class MobManager {
     private static MobManager instance;
     private Map<Integer, Mob> mobMap = new HashMap<>();
 
-    public static void registerMobs() {
+    public static void register() {
         if (instance == null) {
             instance = new MobManager();
-            register(BabySlime.ID, new BabySlime());
-            register(MotherSlime.ID, new MotherSlime());
+            registerMob(BabySlime.ID, new BabySlime());
+            registerMob(MotherSlime.ID, new MotherSlime());
         }
     }
 
-    private static void register(int id, Mob mob) {
+    private static void registerMob(int id, Mob mob) {
         instance.mobMap.put(id, mob);
     }
 
