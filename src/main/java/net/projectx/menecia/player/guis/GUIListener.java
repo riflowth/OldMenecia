@@ -14,6 +14,7 @@ public class GUIListener implements Listener {
     private void onClick(InventoryClickEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
         if (holder instanceof GUI) {
+            event.setCancelled(true);
             ((GUI) holder).onClick((Player) event.getWhoClicked(), event.getSlot(), event.getClick());
         }
     }

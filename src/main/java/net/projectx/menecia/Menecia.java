@@ -1,5 +1,6 @@
 package net.projectx.menecia;
 
+import net.projectx.menecia.player.events.admin.AdminPlaceMobSpawner;
 import net.projectx.menecia.resources.configs.MobSpawnerConfig;
 import net.projectx.menecia.mobs.events.MobDamageEvent;
 import net.projectx.menecia.mobs.events.MobMoveEvent;
@@ -54,6 +55,7 @@ public class Menecia extends JavaPlugin {
         pluginManager.registerEvents(new ResetVanillaPlayerEvent(), this);
         pluginManager.registerEvents(new ResetVanillaMobEvent(), this);
         pluginManager.registerEvents(new GUIListener(), this);
+        pluginManager.registerEvents(new AdminPlaceMobSpawner(), this);
         pluginManager.registerEvents(new PlayerGeneralEvent(this), this);
         pluginManager.registerEvents(new PlayerDamageEvent(this), this);
         pluginManager.registerEvents(new MobDamageEvent(this), this);
@@ -66,6 +68,7 @@ public class Menecia extends JavaPlugin {
     }
 
     private void unregisterAll() {
+        manager.getMobSpawnerManager().stop();
         manager = null;
         mobSpawnerConfig.destroy();
         mobSpawnerConfig = null;

@@ -1,6 +1,5 @@
 package net.projectx.menecia.player.events.admin;
 
-import net.projectx.menecia.Menecia;
 import net.projectx.menecia.player.guis.MobSpawnerGUI;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,11 +9,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 public class AdminPlaceMobSpawner implements Listener {
 
-    private Menecia plugin;
     private MobSpawnerGUI gui;
 
-    public AdminPlaceMobSpawner(Menecia plugin) {
-        this.plugin = plugin;
+    public AdminPlaceMobSpawner() {
         gui = new MobSpawnerGUI();
     }
 

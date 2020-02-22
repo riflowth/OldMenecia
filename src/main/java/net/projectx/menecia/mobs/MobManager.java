@@ -5,8 +5,9 @@ import net.projectx.menecia.mobs.monsters.MotherSlime;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MobManager {
@@ -30,8 +31,8 @@ public class MobManager {
         return instance.mobMap.get(id);
     }
 
-    public static Collection<Mob> getAllMobs() {
-        return instance.mobMap.values();
+    public static List<Mob> getAllMobs() {
+        return new ArrayList<>(instance.mobMap.values());
     }
 
     public static void killAllMobs() {
