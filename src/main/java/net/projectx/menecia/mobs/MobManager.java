@@ -15,10 +15,11 @@ public class MobManager {
     private Map<Integer, Mob> mobMap = new HashMap<>();
 
     public static void registerMobs() {
-        if (instance == null) instance = new MobManager();
-
-        register(BabySlime.ID, new BabySlime());
-        register(MotherSlime.ID, new MotherSlime());
+        if (instance == null) {
+            instance = new MobManager();
+            register(BabySlime.ID, new BabySlime());
+            register(MotherSlime.ID, new MotherSlime());
+        }
     }
 
     private static void register(int id, Mob mob) {
@@ -33,7 +34,7 @@ public class MobManager {
         return instance.mobMap.values();
     }
 
-    public void killAllMobs() {
+    public static void killAllMobs() {
         for (Entity entity : Bukkit.getWorlds().get(0).getEntities()) {
             if (MobUtil.isMob(entity)) {
                 entity.remove();

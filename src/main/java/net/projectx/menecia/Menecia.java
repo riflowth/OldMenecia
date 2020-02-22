@@ -1,8 +1,6 @@
 package net.projectx.menecia;
 
 import net.projectx.menecia.configs.MobSpawnerConfig;
-import net.projectx.menecia.mobs.MobManager;
-import net.projectx.menecia.mobs.MobSpawner;
 import net.projectx.menecia.mobs.events.MobDamageEvent;
 import net.projectx.menecia.mobs.events.MobMoveEvent;
 import net.projectx.menecia.mobs.events.ResetVanillaMobEvent;
@@ -19,8 +17,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class Menecia extends JavaPlugin {
 
-    private DataManager dataManager;
-    private MobSpawner mobSpawner;
+    private Manager manager;
     private MobSpawnerConfig mobSpawnerConfig;
 
     @Override
@@ -29,7 +26,6 @@ public class Menecia extends JavaPlugin {
 
         registerConfigs();
         registerManagers();
-        registerMobSystem();
         registerEvents();
 
         Log.sendFooterBanner();
@@ -66,20 +62,11 @@ public class Menecia extends JavaPlugin {
     }
 
     private void registerManagers() {
-        dataManager = new DataManager(this);
-    }
-
-    private void registerMobSystem() {
-        MobManager.registerMobs();
-        mobSpawner = new MobSpawner(this);
-        mobSpawner.clearAllMobs();
-        mobSpawner.start();
+        manager = new Manager(this);
     }
 
     private void unregisterAll() {
-        dataManager = null;
-        mobSpawner.stop();
-        mobSpawner = null;
+        manager = null;
         mobSpawnerConfig.destroy();
         mobSpawnerConfig = null;
     }
@@ -104,8 +91,8 @@ public class Menecia extends JavaPlugin {
         return this.getScheduler().runTaskTimerAsynchronously(this, runnable, delay, period);
     }
 
-    public DataManager getDataManager() {
-        return dataManager;
+    public Manager getManager() {
+        return manager;
     }
 
 }

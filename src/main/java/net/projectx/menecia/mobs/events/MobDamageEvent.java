@@ -19,7 +19,7 @@ public class MobDamageEvent implements Listener {
 
     public MobDamageEvent(Menecia plugin) {
         this.plugin = plugin;
-        playerManager = plugin.getDataManager().getPlayerManager();
+        playerManager = plugin.getManager().getPlayerManager();
     }
 
     @EventHandler

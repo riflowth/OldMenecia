@@ -1,7 +1,10 @@
-package net.projectx.menecia.mobs;
+package net.projectx.menecia.mobs.spawner;
 
 import net.projectx.menecia.Menecia;
 import net.projectx.menecia.locations.Area;
+import net.projectx.menecia.mobs.Mob;
+import net.projectx.menecia.mobs.MobManager;
+import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.utilities.Log;
 import net.projectx.menecia.utilities.Utils;
 import org.bukkit.Bukkit;
