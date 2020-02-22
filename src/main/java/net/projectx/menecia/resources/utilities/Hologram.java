@@ -1,4 +1,4 @@
-package net.projectx.menecia.utilities;
+package net.projectx.menecia.resources.utilities;
 
 import org.bukkit.Color;
 import org.bukkit.Location;

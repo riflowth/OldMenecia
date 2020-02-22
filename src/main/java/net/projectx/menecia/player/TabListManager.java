@@ -1,6 +1,6 @@
 package net.projectx.menecia.player;
 
-import net.projectx.menecia.utilities.Utils;
+import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.entity.Player;
 
 public class TabListManager {

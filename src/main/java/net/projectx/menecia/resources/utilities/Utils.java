@@ -1,4 +1,4 @@
-package net.projectx.menecia.utilities;
+package net.projectx.menecia.resources.utilities;
 
 import net.md_5.bungee.api.ChatColor;
 

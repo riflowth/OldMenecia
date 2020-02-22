@@ -2,7 +2,7 @@ package net.projectx.menecia.player.bossbars;
 
 import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.resources.Icons;
-import net.projectx.menecia.utilities.Utils;
+import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;

@@ -2,7 +2,7 @@ package net.projectx.menecia.mobs.monsters;
 
 import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.MobType;
-import net.projectx.menecia.utilities.Utils;
+import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;

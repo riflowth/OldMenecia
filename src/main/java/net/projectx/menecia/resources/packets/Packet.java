@@ -1,4 +1,4 @@
-package net.projectx.menecia.packets;
+package net.projectx.menecia.resources.packets;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;

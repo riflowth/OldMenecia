@@ -1,6 +1,6 @@
-package net.projectx.menecia.configs;
+package net.projectx.menecia.resources.configs;
 
-import net.projectx.menecia.utilities.Log;
+import net.projectx.menecia.resources.utilities.Log;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;

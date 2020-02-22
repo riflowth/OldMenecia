@@ -1,6 +1,6 @@
 package net.projectx.menecia;
 
-import net.projectx.menecia.configs.MobSpawnerConfig;
+import net.projectx.menecia.resources.configs.MobSpawnerConfig;
 import net.projectx.menecia.mobs.events.MobDamageEvent;
 import net.projectx.menecia.mobs.events.MobMoveEvent;
 import net.projectx.menecia.mobs.events.ResetVanillaMobEvent;
@@ -9,7 +9,7 @@ import net.projectx.menecia.player.events.PlayerGeneralEvent;
 import net.projectx.menecia.player.events.PlayerLevelingEvent;
 import net.projectx.menecia.player.events.ResetVanillaPlayerEvent;
 import net.projectx.menecia.player.guis.GUIListener;
-import net.projectx.menecia.utilities.Log;
+import net.projectx.menecia.resources.utilities.Log;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;

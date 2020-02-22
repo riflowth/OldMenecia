@@ -1,6 +1,6 @@
 package net.projectx.menecia.player;
 
-import net.projectx.menecia.utilities.Log;
+import net.projectx.menecia.resources.utilities.Log;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

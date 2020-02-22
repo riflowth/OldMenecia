@@ -3,7 +3,7 @@ package net.projectx.menecia;
 import net.projectx.menecia.mobs.MobManager;
 import net.projectx.menecia.player.PlayerManager;
 import net.projectx.menecia.mobs.healthbar.MobHealthBarManager;
-import net.projectx.menecia.utilities.Log;
+import net.projectx.menecia.resources.utilities.Log;
 
 public class Manager {
 
