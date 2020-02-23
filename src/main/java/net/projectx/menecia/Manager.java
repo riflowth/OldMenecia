@@ -19,7 +19,6 @@ public class Manager {
         mobSpawnerManager.start();
     }
 
-
     public PlayerManager getPlayerManager() {
         return playerManager;
     }

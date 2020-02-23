@@ -8,6 +8,14 @@ public enum AttackRange {
     LONG(4),
     VERY_LONG(5);
 
-    AttackRange(int blockRange) { }
+    private final int blockRange;
+
+    AttackRange(int blockRange) {
+        this.blockRange = blockRange;
+    }
+
+    public int getBlockRange() {
+        return blockRange;
+    }
 
 }

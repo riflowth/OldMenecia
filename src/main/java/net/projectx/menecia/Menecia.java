@@ -9,6 +9,7 @@ import net.projectx.menecia.player.events.PlayerLevelingEvent;
 import net.projectx.menecia.player.events.ResetVanillaPlayerEvent;
 import net.projectx.menecia.player.events.admin.AdminPlaceMobSpawner;
 import net.projectx.menecia.player.guis.GUIListener;
+import net.projectx.menecia.resources.Keys;
 import net.projectx.menecia.resources.utilities.Log;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +25,7 @@ public class Menecia extends JavaPlugin {
     public void onEnable() {
         Log.sendHeaderBanner();
 
+        Keys.setPlugin(this);
         registerConfigs();
         registerManagers();
         registerEvents();
