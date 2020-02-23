@@ -1,7 +1,5 @@
 package net.projectx.menecia;
 
-import net.projectx.menecia.player.events.admin.AdminPlaceMobSpawner;
-import net.projectx.menecia.resources.configs.MobSpawnerConfig;
 import net.projectx.menecia.mobs.events.MobDamageEvent;
 import net.projectx.menecia.mobs.events.MobMoveEvent;
 import net.projectx.menecia.mobs.events.ResetVanillaMobEvent;
@@ -9,6 +7,7 @@ import net.projectx.menecia.player.events.PlayerDamageEvent;
 import net.projectx.menecia.player.events.PlayerGeneralEvent;
 import net.projectx.menecia.player.events.PlayerLevelingEvent;
 import net.projectx.menecia.player.events.ResetVanillaPlayerEvent;
+import net.projectx.menecia.player.events.admin.AdminPlaceMobSpawner;
 import net.projectx.menecia.player.guis.GUIListener;
 import net.projectx.menecia.resources.utilities.Log;
 import org.bukkit.plugin.PluginManager;
@@ -19,7 +18,7 @@ import org.bukkit.scheduler.BukkitTask;
 public class Menecia extends JavaPlugin {
 
     private Manager manager;
-    private MobSpawnerConfig mobSpawnerConfig;
+    private Config config;
 
     @Override
     public void onEnable() {
@@ -41,15 +40,6 @@ public class Menecia extends JavaPlugin {
         Log.sendFooterBanner();
     }
 
-    private void registerConfigs() {
-        mobSpawnerConfig = new MobSpawnerConfig(this);
-        mobSpawnerConfig.initialize();
-    }
-
-    public MobSpawnerConfig getMobSpawnerConfig() {
-        return mobSpawnerConfig;
-    }
-
     private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new ResetVanillaPlayerEvent(), this);
@@ -63,15 +53,26 @@ public class Menecia extends JavaPlugin {
         pluginManager.registerEvents(new PlayerLevelingEvent(this), this);
     }
 
+    private void registerConfigs() {
+        config = new Config(this);
+    }
+
+    public Config getConfigs() {
+        return config;
+    }
+
     private void registerManagers() {
         manager = new Manager(this);
+    }
+
+    public Manager getManagers() {
+        return manager;
     }
 
     private void unregisterAll() {
         manager.getMobSpawnerManager().stop();
         manager = null;
-        mobSpawnerConfig.destroy();
-        mobSpawnerConfig = null;
+        config = null;
     }
 
     public BukkitScheduler getScheduler() {
@@ -92,10 +93,6 @@ public class Menecia extends JavaPlugin {
 
     public BukkitTask runTaskTimerAsynchronously(Runnable runnable, long delay, long period) {
         return this.getScheduler().runTaskTimerAsynchronously(this, runnable, delay, period);
-    }
-
-    public Manager getManager() {
-        return manager;
     }
 
 }
