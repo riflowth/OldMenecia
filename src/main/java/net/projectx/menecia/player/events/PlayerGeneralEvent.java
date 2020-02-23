@@ -19,7 +19,7 @@ public class PlayerGeneralEvent implements Listener {
 
     public PlayerGeneralEvent(Menecia plugin) {
         this.plugin = plugin;
-        playerManager = plugin.getManager().getPlayerManager();
+        playerManager = plugin.getManagers().getPlayerManager();
     }
 
     @EventHandler
