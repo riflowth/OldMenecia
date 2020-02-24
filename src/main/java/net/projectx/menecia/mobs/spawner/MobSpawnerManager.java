@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class MobSpawnerManager implements Listener {
 
@@ -36,15 +35,12 @@ public class MobSpawnerManager implements Listener {
         spawnerTask = plugin.runTaskTimer(() -> {
             for (MobSpawner spawner : spawnerList) {
                 if (canSpawn(spawner)) {
-                    int spawnCount = getSpawnCount(spawner);
-                    for (int i = 0; i < spawnCount; i++) {
-                        Location spawningLocation = spawner.getSpawningArea().getRandomLocation();
-                        int entityId = MobUtil.spawn(spawner.getMob(), spawningLocation).getEntityId();
-                        entityMap.put(entityId, spawner);
-                        spawner.increaseCurrentAmount();
-                        Log.sendSuccess("Spawned 1 " + MobUtil.getDisplayNameWithLevel(spawner.getMob())
-                                + " &6(" + spawner.getCurrentAmount() + "/" + spawner.getMaximumAmount() + ")");
-                    }
+                    Location spawningLocation = spawner.getSpawningArea().getRandomLocation();
+                    int entityId = MobUtil.spawn(spawner.getMob(), spawningLocation).getEntityId();
+                    entityMap.put(entityId, spawner);
+                    spawner.increaseCurrentAmount();
+                    Log.sendSuccess("Spawned 1 " + MobUtil.getDisplayNameWithLevel(spawner.getMob())
+                            + " &6(" + spawner.getCurrentAmount() + "/" + spawner.getMaximumAmount() + ")");
                 }
             }
 
@@ -53,25 +49,19 @@ public class MobSpawnerManager implements Listener {
 
     public boolean canSpawn(MobSpawner spawner) {
         boolean isChunkLoaded = spawner.getSpawningArea().getCenter().isChunkLoaded();
+        if (!isChunkLoaded) return false;
+
         boolean isAmountAvailable = (spawner.getCurrentAmount() < spawner.getMaximumAmount());
+        if (!isAmountAvailable) return false;
 
         boolean isRightTime = false;
-        long latestTimeStamp = spawner.getLatestSpawnTimestamp();
-        if (latestTimeStamp == 0) {
+        long latestTimeStamp = spawner.getTimestamp();
+        long cooldown = getDefaultCooldown(spawner) * 1000;
+        if ((latestTimeStamp == 0) || ((latestTimeStamp + cooldown) <= System.currentTimeMillis())) {
             isRightTime = true;
-            spawner.setLatestSpawnTimestamp(System.currentTimeMillis());
-        } else {
-            long cooldown = getDefaultCooldown(spawner) * 1000;
-            if ((latestTimeStamp + cooldown) >= System.currentTimeMillis()) {
-                isRightTime = true;
-                spawner.setLatestSpawnTimestamp(System.currentTimeMillis());
-            } else {
-                long timeLeft = (latestTimeStamp + cooldown) / 1000 - System.currentTimeMillis() / 1000;
-                System.out.println("Wait for " + timeLeft + " sec");
-            }
+            spawner.setTimestamp(System.currentTimeMillis());
         }
-
-        return isChunkLoaded && isAmountAvailable && isRightTime;
+        return isRightTime;
     }
 
     public int getDefaultCooldown(MobSpawner spawner) {
@@ -88,18 +78,6 @@ public class MobSpawnerManager implements Listener {
                 return 10;
             default:
                 return 0;
-        }
-    }
-
-    public int getSpawnCount(MobSpawner spawner) {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        switch (spawner.getSpawnRate()) {
-            case ABUNDANT:
-                return random.nextInt(2, 4);
-            case COMMON:
-                return random.nextInt(1, 3);
-            default:
-                return 1;
         }
     }
 
@@ -123,15 +101,17 @@ public class MobSpawnerManager implements Listener {
     }
 
     public void loadSpawner(MobSpawner spawner) {
-
+        // TODO: Work with Config file!
     }
 
     public void addSpawner(MobSpawner spawner) {
         spawnerList.add(spawner);
+        // TODO: Work with Config file!
         MobSpawnerConfig config = plugin.getConfigs().getMobSpawnerConfig();
     }
 
     public void removeSpawner(MobSpawner spawner) {
+        // TODO: Work with Config file!
         spawnerList.remove(spawner);
     }
 

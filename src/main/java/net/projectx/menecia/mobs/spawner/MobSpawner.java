@@ -10,7 +10,7 @@ public class MobSpawner {
     private Area spawningArea;
     private int maximumAmount;
     private int currentAmount = 0;
-    private long latestSpawnTimestamp = 0;
+    private long timestamp = 0;
 
     public MobSpawner() {
     }
@@ -66,12 +66,12 @@ public class MobSpawner {
         this.currentAmount--;
     }
 
-    public long getLatestSpawnTimestamp() {
-        return latestSpawnTimestamp;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setLatestSpawnTimestamp(long latestSpawnTimestamp) {
-        this.latestSpawnTimestamp = latestSpawnTimestamp;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
 }
