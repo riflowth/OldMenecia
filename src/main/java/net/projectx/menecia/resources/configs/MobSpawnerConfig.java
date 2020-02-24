@@ -9,7 +9,6 @@ import java.io.File;
 
 public class MobSpawnerConfig {
 
-    private static MobSpawnerConfig instance;
     private File file;
     private String fileNameWithExtension = "MobSpawner.yml";
     private FileConfiguration config;
@@ -23,7 +22,6 @@ public class MobSpawnerConfig {
     }
 
     public void initialize() {
-        instance = this;
         if (!file.exists()) {
             if (!pluginDataFolder.exists()) {
                 if (pluginDataFolder.mkdir()) {
@@ -39,28 +37,24 @@ public class MobSpawnerConfig {
         Log.sendSuccess(fileNameWithExtension + " has been loaded!");
     }
 
-    public void destroy() {
-        instance = null;
-    }
-
     public void reload() {
         config = YamlConfiguration.loadConfiguration(file);
     }
 
-    public static void set(String path, Object value) {
-        instance.config.set(path, value);
+    public void set(String path, Object value) {
+        config.set(path, value);
     }
 
-    public static String getString(String key) {
-        return instance.config.getString(key);
+    public String getString(String key) {
+        return config.getString(key);
     }
 
-    public static int getInt(String key) {
-        return instance.config.getInt(key);
+    public int getInt(String key) {
+        return config.getInt(key);
     }
 
-    public static double getDouble(String key) {
-        return instance.config.getDouble(key);
+    public double getDouble(String key) {
+        return config.getDouble(key);
     }
 
 }

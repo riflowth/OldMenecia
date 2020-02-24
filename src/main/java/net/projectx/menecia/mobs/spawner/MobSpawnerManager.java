@@ -3,6 +3,7 @@ package net.projectx.menecia.mobs.spawner;
 import net.projectx.menecia.Menecia;
 import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.MobUtil;
+import net.projectx.menecia.resources.configs.MobSpawnerConfig;
 import net.projectx.menecia.resources.utilities.Log;
 import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.Location;
@@ -17,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 
 public class MobSpawnerManager implements Listener {
 
@@ -41,10 +41,10 @@ public class MobSpawnerManager implements Listener {
                         Location spawningLocation = spawner.getSpawningArea().getRandomLocation();
                         int entityId = MobUtil.spawn(spawner.getMob(), spawningLocation).getEntityId();
                         entityMap.put(entityId, spawner);
+                        spawner.increaseCurrentAmount();
                         Log.sendSuccess("Spawned 1 " + MobUtil.getDisplayNameWithLevel(spawner.getMob())
                                 + " &6(" + spawner.getCurrentAmount() + "/" + spawner.getMaximumAmount() + ")");
                     }
-                    spawner.setLatestSpawnTimestamp(System.currentTimeMillis());
                 }
             }
 
@@ -56,12 +56,19 @@ public class MobSpawnerManager implements Listener {
         boolean isAmountAvailable = (spawner.getCurrentAmount() < spawner.getMaximumAmount());
 
         boolean isRightTime = false;
-        long timeLeft = System.currentTimeMillis() - spawner.getLatestSpawnTimestamp();
-        int defaultCooldown = getDefaultCooldown(spawner);
-        if (TimeUnit.MICROSECONDS.toSeconds(timeLeft) >= defaultCooldown) {
+        long latestTimeStamp = spawner.getLatestSpawnTimestamp();
+        if (latestTimeStamp == 0) {
             isRightTime = true;
+            spawner.setLatestSpawnTimestamp(System.currentTimeMillis());
         } else {
-            System.out.println("Wait for " + (TimeUnit.MILLISECONDS.toSeconds(timeLeft) - defaultCooldown) + " sec");
+            long cooldown = getDefaultCooldown(spawner) * 1000;
+            if ((latestTimeStamp + cooldown) >= System.currentTimeMillis()) {
+                isRightTime = true;
+                spawner.setLatestSpawnTimestamp(System.currentTimeMillis());
+            } else {
+                long timeLeft = (latestTimeStamp + cooldown) / 1000 - System.currentTimeMillis() / 1000;
+                System.out.println("Wait for " + timeLeft + " sec");
+            }
         }
 
         return isChunkLoaded && isAmountAvailable && isRightTime;
@@ -121,6 +128,7 @@ public class MobSpawnerManager implements Listener {
 
     public void addSpawner(MobSpawner spawner) {
         spawnerList.add(spawner);
+        MobSpawnerConfig config = plugin.getConfigs().getMobSpawnerConfig();
     }
 
     public void removeSpawner(MobSpawner spawner) {

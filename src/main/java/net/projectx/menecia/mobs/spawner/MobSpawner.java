@@ -1,6 +1,6 @@
 package net.projectx.menecia.mobs.spawner;
 
-import net.projectx.menecia.locations.Area;
+import net.projectx.menecia.world.Area;
 import net.projectx.menecia.mobs.Mob;
 
 public class MobSpawner {
@@ -10,7 +10,10 @@ public class MobSpawner {
     private Area spawningArea;
     private int maximumAmount;
     private int currentAmount = 0;
-    private long latestSpawnTimestamp;
+    private long latestSpawnTimestamp = 0;
+
+    public MobSpawner() {
+    }
 
     public MobSpawner(Mob mob, MobSpawnRate spawnRate, Area spawningArea, int maximumAmount) {
         this.mob = mob;
@@ -23,6 +26,10 @@ public class MobSpawner {
         return mob;
     }
 
+    public void setMob(Mob mob) {
+        this.mob = mob;
+    }
+
     public MobSpawnRate getSpawnRate() {
         return spawnRate;
     }
@@ -33,6 +40,10 @@ public class MobSpawner {
 
     public Area getSpawningArea() {
         return spawningArea;
+    }
+
+    public void setSpawningArea(Area spawningArea) {
+        this.spawningArea = spawningArea;
     }
 
     public int getMaximumAmount() {
