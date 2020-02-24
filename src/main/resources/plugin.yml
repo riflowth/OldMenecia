@@ -1,5 +1,7 @@
 name: Menecia
 version: ${project.version}
+description: The MMORPG Minecraft Server named "Menecia"
+author: ProjectX's Team
 main: net.projectx.menecia.Menecia
 api-version: 1.15
 depend: [ProtocolLib]
