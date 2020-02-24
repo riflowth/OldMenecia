@@ -44,7 +44,7 @@ public class MobSpawnerManager implements Listener {
                 }
             }
 
-        }, 0, Utils.TICK_PER_SEC);
+        }, 0, 20);
     }
 
     public boolean canSpawn(MobSpawner spawner) {

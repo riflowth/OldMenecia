@@ -33,7 +33,7 @@ public class MobHealthBarManager {
     public void updateMobHealBarTask(Player player, MobHealthBar mobHealthBar) {
         if (taskMap.get(player.getUniqueId()) != null) taskMap.get(player.getUniqueId()).cancel();
         MobHealthBarTask mobHealthBarTask = new MobHealthBarTask(player.getUniqueId(), mobHealthBar);
-        mobHealthBarTask.runTaskTimerAsynchronously(plugin, 0, Utils.TICK_PER_SEC);
+        mobHealthBarTask.runTaskTimerAsynchronously(plugin, 0, 20);
         taskMap.put(player.getUniqueId(), mobHealthBarTask);
     }
 
