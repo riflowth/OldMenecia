@@ -1,5 +1,6 @@
 package net.projectx.menecia;
 
+import net.projectx.menecia.mobs.MobManager;
 import net.projectx.menecia.mobs.events.MobDamageEvent;
 import net.projectx.menecia.mobs.events.MobMoveEvent;
 import net.projectx.menecia.mobs.events.ResetVanillaMobEvent;
@@ -7,9 +8,8 @@ import net.projectx.menecia.player.events.PlayerDamageEvent;
 import net.projectx.menecia.player.events.PlayerGeneralEvent;
 import net.projectx.menecia.player.events.PlayerLevelingEvent;
 import net.projectx.menecia.player.events.ResetVanillaPlayerEvent;
-import net.projectx.menecia.player.events.admin.AdminPlaceMobSpawner;
+import net.projectx.menecia.player.events.admin.mobspawner.AdminPlaceMobSpawner;
 import net.projectx.menecia.player.guis.GUIListener;
-import net.projectx.menecia.resources.Keys;
 import net.projectx.menecia.resources.utilities.Log;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,10 +25,11 @@ public class Menecia extends JavaPlugin {
     public void onEnable() {
         Log.sendHeaderBanner();
 
-        Keys.setPlugin(this);
         registerConfigs();
         registerManagers();
         registerEvents();
+
+        MobManager.killAllMobs();
 
         Log.sendFooterBanner();
     }
@@ -44,10 +45,11 @@ public class Menecia extends JavaPlugin {
 
     private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvents(new ServerEvent(), this);
         pluginManager.registerEvents(new ResetVanillaPlayerEvent(), this);
         pluginManager.registerEvents(new ResetVanillaMobEvent(), this);
         pluginManager.registerEvents(new GUIListener(), this);
-        pluginManager.registerEvents(new AdminPlaceMobSpawner(), this);
+        pluginManager.registerEvents(new AdminPlaceMobSpawner(this), this);
         pluginManager.registerEvents(new PlayerGeneralEvent(this), this);
         pluginManager.registerEvents(new PlayerDamageEvent(this), this);
         pluginManager.registerEvents(new MobDamageEvent(this), this);

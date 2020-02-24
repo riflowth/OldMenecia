@@ -4,12 +4,14 @@ import net.projectx.menecia.mobs.MobManager;
 import net.projectx.menecia.mobs.healthbar.MobHealthBarManager;
 import net.projectx.menecia.mobs.spawner.MobSpawnerManager;
 import net.projectx.menecia.player.PlayerManager;
+import net.projectx.menecia.player.events.admin.mobspawner.MobSpawnerSetUpManager;
 
 public class Manager {
 
     private PlayerManager playerManager;
     private MobSpawnerManager mobSpawnerManager;
     private MobHealthBarManager mobHealthBarManager;
+    private MobSpawnerSetUpManager mobSpawnerSetUpManager;
 
     Manager(Menecia plugin) {
         MobManager.register();
@@ -17,6 +19,7 @@ public class Manager {
         mobHealthBarManager = new MobHealthBarManager(plugin);
         mobSpawnerManager = new MobSpawnerManager(plugin);
         mobSpawnerManager.start();
+        mobSpawnerSetUpManager = new MobSpawnerSetUpManager(plugin);
     }
 
     public PlayerManager getPlayerManager() {
@@ -29,6 +32,10 @@ public class Manager {
 
     public MobHealthBarManager getMobHealthBarManager() {
         return mobHealthBarManager;
+    }
+
+    public MobSpawnerSetUpManager getMobSpawnerSetUpManager() {
+        return mobSpawnerSetUpManager;
     }
 
 }
