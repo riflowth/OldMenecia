@@ -1,4 +1,4 @@
-package net.projectx.menecia.locations;
+package net.projectx.menecia.world;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -45,6 +45,13 @@ public class Area {
 
     public boolean isIn(Player player) {
         return isIn(player.getLocation());
+    }
+
+    public void expand(int radius) {
+        xMin -= radius;
+        xMax += radius;
+        zMin -= radius;
+        zMax += radius;
     }
 
 }
