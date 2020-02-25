@@ -4,13 +4,13 @@ import net.projectx.menecia.resources.Keys;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class MobUtil {
 
@@ -23,25 +23,11 @@ public class MobUtil {
             entity.setCustomName(getDisplayNameWithLevel(mob));
             entity.setRemoveWhenFarAway(false);
 
-            if (entity instanceof Zombie) ((Zombie) entity).setBaby(false);
-            if (mob.getSize() != null) {
-                int[] allSize = mob.getSize();
-                int selectedSize = allSize[0];
-                if (allSize.length > 1) {
-                    selectedSize = ThreadLocalRandom.current().nextInt(allSize[0], allSize[allSize.length - 1] + 1);
-                }
-                if (entity instanceof Slime) {
-                    ((Slime) entity).setSize(selectedSize);
-                } else if (entity instanceof Phantom) {
-                    ((Phantom) entity).setSize(selectedSize);
-                }
-            }
+            mob.spawn(entity);
 
             entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(mob.getMaxHealth());
             entity.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
             entity.setHealth(mob.getMaxHealth());
-
-            mob.spawn(entity);
 
             return entity;
         } catch (ClassCastException exception) {

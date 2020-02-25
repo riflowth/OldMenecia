@@ -5,6 +5,9 @@ import net.projectx.menecia.mobs.MobType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Slime;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class BabySlime implements Mob {
 
@@ -36,7 +39,8 @@ public class BabySlime implements Mob {
 
     @Override
     public void spawn(Entity entity) {
-
+        int randomSize = ThreadLocalRandom.current().nextInt(size[0], size[size.length - 1] + 1);
+        ((Slime) entity).setSize(randomSize);
     }
 
     @Override
@@ -96,11 +100,6 @@ public class BabySlime implements Mob {
     @Override
     public int getMostAttackDamage() {
         return attackDamageRange[1];
-    }
-
-    @Override
-    public int[] getSize() {
-        return size;
     }
 
 }

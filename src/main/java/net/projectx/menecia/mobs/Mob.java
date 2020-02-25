@@ -38,6 +38,4 @@ public interface Mob {
 
     int getMostAttackDamage();
 
-    int[] getSize();
-
 }

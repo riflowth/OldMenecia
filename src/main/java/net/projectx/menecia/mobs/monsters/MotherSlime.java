@@ -5,6 +5,7 @@ import net.projectx.menecia.mobs.MobType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Slime;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -19,7 +20,7 @@ public class MotherSlime implements Mob {
     private static final int experience = 5;
     private static final int[] coinDrops = {2, 5};
     private static final int[] attackDamageRange = {8, 12};
-    private static final int[] size = {3};
+    private static final int size = 3;
 
     @Override
     public int getId() {
@@ -38,6 +39,7 @@ public class MotherSlime implements Mob {
 
     @Override
     public void spawn(Entity entity) {
+        ((Slime) entity).setSize(size);
     }
 
     @Override
@@ -98,11 +100,6 @@ public class MotherSlime implements Mob {
     @Override
     public int getMostAttackDamage() {
         return attackDamageRange[1];
-    }
-
-    @Override
-    public int[] getSize() {
-        return size;
     }
 
 }
