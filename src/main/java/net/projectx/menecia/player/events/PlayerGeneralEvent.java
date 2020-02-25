@@ -37,9 +37,8 @@ public class PlayerGeneralEvent implements Listener {
                 1000000, false, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20 * joiningEffectTime,
                 -1000000, false, false, false));
-        plugin.runTaskLater(() -> {
-            player.sendTitle("", Utils.color("&7Are you alright?"), 10, 20 * 2, 20);
-        }, 20 * joiningEffectTime);
+        plugin.runTaskLater(() -> player.sendTitle("", Utils.color("&7Are you alright?"),
+                10, 20 * 2, 20), 20 * joiningEffectTime);
     }
 
     @EventHandler
