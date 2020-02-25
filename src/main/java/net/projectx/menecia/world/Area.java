@@ -27,7 +27,7 @@ public class Area {
     }
 
     public Location getCenter() {
-        return new Location(world, (xMax - xMin) / 2 + xMin, (yMax -yMin) / 2 + yMin, (zMax - zMin) / 2 + zMin);
+        return new Location(world, (xMax - xMin) / 2.0 + xMin, (yMax -yMin) / 2.0 + yMin, (zMax - zMin) / 2.0 + zMin);
     }
 
     public Location getRandomLocation() {
