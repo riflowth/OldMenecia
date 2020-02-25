@@ -5,7 +5,6 @@ import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.resources.configs.MobSpawnerConfig;
 import net.projectx.menecia.resources.utilities.Log;
-import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;

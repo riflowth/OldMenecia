@@ -2,7 +2,6 @@ package net.projectx.menecia.mobs.healthbar;
 
 import net.projectx.menecia.Menecia;
 import net.projectx.menecia.player.bossbars.MobHealthBar;
-import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
