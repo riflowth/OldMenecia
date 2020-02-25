@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerPickupItemEvent implements Listener {
 
@@ -12,8 +13,15 @@ public class PlayerPickupItemEvent implements Listener {
     private void onEvent(EntityPickupItemEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
-            player.sendTitle("", Utils.color("&a+1 &f" + event.getItem().getName() + " &ato bag"),
-                    10, 40, 10);
+            ItemStack itemStack = event.getItem().getItemStack();
+            String dropName = itemStack.getItemMeta().getDisplayName();
+            if (itemStack.getAmount() > 1) {
+                player.sendTitle("", Utils.color("&7You have found a " + dropName + "!"),
+                        10, 40, 10);
+            } else {
+                player.sendTitle("", Utils.color("&7You have found some " + dropName + "s!"),
+                        10, 40, 10);
+            }
         }
     }
 
