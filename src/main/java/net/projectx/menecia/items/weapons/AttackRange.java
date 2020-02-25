@@ -1,4 +1,4 @@
-package net.projectx.menecia.weapons;
+package net.projectx.menecia.items.weapons;
 
 public enum AttackRange {
 

@@ -17,6 +17,7 @@ public class MotherSlime implements Mob {
     private static final int level = 2;
     private static final int maxHealth = 25;
     private static final int experience = 5;
+    private static final int[] coinDrops = {2, 5};
     private static final int[] attackDamageRange = {8, 12};
     private static final int[] size = {3};
 
@@ -62,6 +63,11 @@ public class MotherSlime implements Mob {
     @Override
     public int getExperience() {
         return experience;
+    }
+
+    @Override
+    public int[] getCoinDrops() {
+        return coinDrops;
     }
 
     @Override

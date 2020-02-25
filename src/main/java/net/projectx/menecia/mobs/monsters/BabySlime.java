@@ -16,6 +16,7 @@ public class BabySlime implements Mob {
     private static final int maxHealth = 10;
     private static final int[] attackDamageRange = {2, 5};
     private static final int experience = 5;
+    private static final int[] coinDrops = {1, 3};
     private static final int[] size = {1, 2};
 
     @Override
@@ -60,6 +61,11 @@ public class BabySlime implements Mob {
     @Override
     public int getExperience() {
         return experience;
+    }
+
+    @Override
+    public int[] getCoinDrops() {
+        return coinDrops;
     }
 
     @Override

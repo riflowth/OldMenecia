@@ -24,6 +24,8 @@ public interface Mob {
 
     int getExperience();
 
+    int[] getCoinDrops();
+
     void attack(Player player);
 
     void stopAttack();

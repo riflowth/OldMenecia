@@ -2,12 +2,10 @@ package net.projectx.menecia;
 
 import net.projectx.menecia.mobs.MobManager;
 import net.projectx.menecia.mobs.events.MobDamageEvent;
+import net.projectx.menecia.mobs.events.MobDeathEvent;
 import net.projectx.menecia.mobs.events.MobMoveEvent;
 import net.projectx.menecia.mobs.events.ResetVanillaMobEvent;
-import net.projectx.menecia.player.events.PlayerDamageEvent;
-import net.projectx.menecia.player.events.PlayerGeneralEvent;
-import net.projectx.menecia.player.events.PlayerLevelingEvent;
-import net.projectx.menecia.player.events.ResetVanillaPlayerEvent;
+import net.projectx.menecia.player.events.*;
 import net.projectx.menecia.player.events.admin.mobspawner.AdminPlaceMobSpawner;
 import net.projectx.menecia.player.guis.GUIListener;
 import net.projectx.menecia.resources.utilities.Log;
@@ -52,7 +50,9 @@ public class Menecia extends JavaPlugin {
         pluginManager.registerEvents(new AdminPlaceMobSpawner(this), this);
         pluginManager.registerEvents(new PlayerGeneralEvent(this), this);
         pluginManager.registerEvents(new PlayerDamageEvent(this), this);
+        pluginManager.registerEvents(new PlayerPickupItemEvent(), this);
         pluginManager.registerEvents(new MobDamageEvent(this), this);
+        pluginManager.registerEvents(new MobDeathEvent(), this);
         pluginManager.registerEvents(new MobMoveEvent(), this);
         pluginManager.registerEvents(new PlayerLevelingEvent(this), this);
     }
