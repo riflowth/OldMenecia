@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class PlayerActionBarTask extends BukkitRunnable {
+public class PlayerActionBarUpdater extends BukkitRunnable {
 
     private List<UUID> updateList = new ArrayList<>();
 
