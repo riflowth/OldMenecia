@@ -2,7 +2,7 @@ package net.projectx.menecia.player.events;
 
 import net.md_5.bungee.api.ChatColor;
 import net.projectx.menecia.Menecia;
-import net.projectx.menecia.player.PlayerActionBarUpdater;
+import net.projectx.menecia.player.PlayerStatusBarUpdater;
 import net.projectx.menecia.player.PlayerWrapperManager;
 import net.projectx.menecia.player.TabListManager;
 import net.projectx.menecia.resources.utilities.Utils;
@@ -19,14 +19,14 @@ public class PlayerGeneralEvents implements Listener {
 
     private Menecia plugin;
     private PlayerWrapperManager playerWrapperManager;
-    private PlayerActionBarUpdater playerActionBarUpdater;
+    private PlayerStatusBarUpdater playerStatusBarUpdater;
     private static final int joiningEffectTime = 3;
 
     public PlayerGeneralEvents(Menecia plugin) {
         this.plugin = plugin;
         this.playerWrapperManager = plugin.getManagers().getPlayerWrapperManager();
-        this.playerActionBarUpdater = new PlayerActionBarUpdater();
-        this.playerActionBarUpdater.runTaskTimerAsynchronously(plugin, 0, 5);
+        this.playerStatusBarUpdater = new PlayerStatusBarUpdater();
+        this.plugin.runTaskTimerAsynchronously(playerStatusBarUpdater, 0, 5);
     }
 
     @EventHandler
@@ -35,7 +35,7 @@ public class PlayerGeneralEvents implements Listener {
         Player player = event.getPlayer();
 
         playerWrapperManager.add(player);
-        playerActionBarUpdater.addUpdater(player);
+        playerStatusBarUpdater.update(player);
         TabListManager.initialize(player);
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * joiningEffectTime,
@@ -49,12 +49,12 @@ public class PlayerGeneralEvents implements Listener {
     }
 
     @EventHandler
-    private void onPlayerQitemuit(PlayerQuitEvent event) {
+    private void onPlayerQuit(PlayerQuitEvent event) {
         event.setQuitMessage(null);
         Player player = event.getPlayer();
 
         playerWrapperManager.remove(player);
-        playerActionBarUpdater.removeUpdater(player);
+        playerStatusBarUpdater.remove(player);
     }
 
     @EventHandler

@@ -10,13 +10,14 @@ import java.util.UUID;
 
 public class MobHealthBarManager {
 
-    private Menecia plugin;
     private Map<LivingEntity, MobHealthBar> healthBarMap = new HashMap<>();
     private Map<UUID, MobHealthBar> healthBarCache = new HashMap<>();
-    private Map<UUID, MobHealthBarTask> taskMap = new HashMap<>();
+    private MobHealthBarUpdater mobHealthBarUpdater;
 
     public MobHealthBarManager(Menecia plugin) {
-        this.plugin = plugin;
+        this.mobHealthBarUpdater = new MobHealthBarUpdater();
+        plugin.runTaskTimerAsynchronously(mobHealthBarUpdater, 0,
+                20 * MobHealthBarUpdater.UPDATE_PERIOD);
     }
 
     public void showHealthBar(Player player, LivingEntity mobEntity) {
@@ -25,14 +26,7 @@ public class MobHealthBarManager {
         cacheHealthBarForPlayer(player, mobHealthBar);
         if (!mobHealthBar.hasShowTo(player)) mobHealthBar.show(player);
         mobHealthBar.update();
-        updateMobHealBarTask(player, mobHealthBar);
-    }
-
-    public void updateMobHealBarTask(Player player, MobHealthBar mobHealthBar) {
-        if (taskMap.get(player.getUniqueId()) != null) taskMap.get(player.getUniqueId()).cancel();
-        MobHealthBarTask mobHealthBarTask = new MobHealthBarTask(player.getUniqueId(), mobHealthBar);
-        mobHealthBarTask.runTaskTimerAsynchronously(plugin, 0, 20);
-        taskMap.put(player.getUniqueId(), mobHealthBarTask);
+        mobHealthBarUpdater.update(player, mobHealthBar);
     }
 
     public void removeHealthBar(LivingEntity mobEntity) {
