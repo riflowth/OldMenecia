@@ -9,29 +9,29 @@ import java.util.UUID;
 
 public class MobHealthBarUpdater extends BukkitRunnable {
 
-    private Map<UUID, MobHealthBar> uuidToMobHealthBar = new HashMap<>();
-    private Map<UUID, Long> uuidToTimestamp = new HashMap<>();
+    private Map<UUID, MobHealthBar> playerUuidToMobHealthBar = new HashMap<>();
+    private Map<UUID, Long> playerUuidToTimestamp = new HashMap<>();
     private static final int maximumTime = 10;
     public static final int UPDATE_PERIOD = 1;
 
     public void update(Player player, MobHealthBar mobHealthBar) {
-        uuidToMobHealthBar.put(player.getUniqueId(), mobHealthBar);
-        uuidToTimestamp.put(player.getUniqueId(), System.currentTimeMillis());
+        playerUuidToMobHealthBar.put(player.getUniqueId(), mobHealthBar);
+        playerUuidToTimestamp.put(player.getUniqueId(), System.currentTimeMillis());
     }
 
     public void remove(Player player) {
-        uuidToMobHealthBar.remove(player.getUniqueId());
-        uuidToTimestamp.remove(player.getUniqueId());
+        playerUuidToMobHealthBar.remove(player.getUniqueId());
+        playerUuidToTimestamp.remove(player.getUniqueId());
     }
 
     @Override
     public void run() {
-        uuidToTimestamp.forEach((uuid, latestTimestamp) -> {
+        playerUuidToTimestamp.forEach((uuid, latestTimestamp) -> {
             long currentTimestamp = System.currentTimeMillis();
             if (((currentTimestamp - latestTimestamp) / 1000) >= maximumTime) {
-                uuidToMobHealthBar.get(uuid).hide(uuid);
-                uuidToMobHealthBar.remove(uuid);
-                uuidToTimestamp.remove(uuid);
+                playerUuidToMobHealthBar.get(uuid).hide(uuid);
+                playerUuidToMobHealthBar.remove(uuid);
+                playerUuidToTimestamp.remove(uuid);
             }
         });
     }

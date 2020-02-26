@@ -84,8 +84,8 @@ public class PlayerDamageEvent implements Listener {
 
     private void updateDamage(Player player, LivingEntity mobEntity, double damage) {
         damageMap.putIfAbsent(mobEntity, new HashMap<UUID, Double>() {{ put(player.getUniqueId(), 0D); }});
-        Map<UUID, Double> uuidToDamage = damageMap.get(mobEntity);
-        uuidToDamage.merge(player.getUniqueId(), damage, Double::sum);
+        Map<UUID, Double> playerUuidToDamage = damageMap.get(mobEntity);
+        playerUuidToDamage.merge(player.getUniqueId(), damage, Double::sum);
     }
 
     private double checkDistance(Player player, Entity entity) {

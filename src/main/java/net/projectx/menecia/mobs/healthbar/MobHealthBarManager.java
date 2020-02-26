@@ -11,7 +11,7 @@ import java.util.UUID;
 public class MobHealthBarManager {
 
     private Map<LivingEntity, MobHealthBar> livingEntityToHealthBar = new HashMap<>();
-    private Map<UUID, MobHealthBar> uuidToMobHealthBar = new HashMap<>();
+    private Map<UUID, MobHealthBar> playerUuidToMobHealthBar = new HashMap<>();
     private MobHealthBarUpdater mobHealthBarUpdater;
 
     public MobHealthBarManager(Menecia plugin) {
@@ -35,12 +35,12 @@ public class MobHealthBarManager {
     }
 
     private void cacheHealthBarForPlayer(Player player, MobHealthBar newHealthBar) {
-        if (uuidToMobHealthBar.get(player.getUniqueId()) != null) {
-            if (uuidToMobHealthBar.get(player.getUniqueId()) != newHealthBar) {
-                uuidToMobHealthBar.get(player.getUniqueId()).hide(player);
+        if (playerUuidToMobHealthBar.get(player.getUniqueId()) != null) {
+            if (playerUuidToMobHealthBar.get(player.getUniqueId()) != newHealthBar) {
+                playerUuidToMobHealthBar.get(player.getUniqueId()).hide(player);
             }
         }
-        uuidToMobHealthBar.put(player.getUniqueId(), newHealthBar);
+        playerUuidToMobHealthBar.put(player.getUniqueId(), newHealthBar);
     }
 
 }
