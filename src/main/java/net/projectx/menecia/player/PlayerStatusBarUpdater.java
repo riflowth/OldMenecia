@@ -9,26 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class PlayerActionBarUpdater extends BukkitRunnable {
+public class PlayerStatusBarUpdater extends BukkitRunnable {
 
-    private List<UUID> updateList = new ArrayList<>();
+    private List<UUID> uuids = new ArrayList<>();
 
-    public void addUpdater(Player player) {
-        updateList.add(player.getUniqueId());
+    public void update(Player player) {
+        uuids.add(player.getUniqueId());
     }
 
-    public void removeUpdater(Player player) {
-        updateList.remove(player.getUniqueId());
+    public void remove(Player player) {
+        uuids.remove(player.getUniqueId());
     }
 
     @Override
     public void run() {
         StringBuilder stringBuilder = new StringBuilder();
-        updateList.forEach((uuid) -> {
+        uuids.forEach((uuid) -> {
             Player player = Bukkit.getPlayer(uuid);
 
             if (player == null) {
-                updateList.remove(uuid);
+                uuids.remove(uuid);
                 return;
             }
 
@@ -61,7 +61,7 @@ public class PlayerActionBarUpdater extends BukkitRunnable {
                     .append(0);
 
             player.sendActionBar('&', stringBuilder.toString());
-            stringBuilder.delete(0, stringBuilder.length());
+            stringBuilder.setLength(0);
         });
     }
 

@@ -2,8 +2,8 @@ package net.projectx.menecia.player.events;
 
 import net.md_5.bungee.api.ChatColor;
 import net.projectx.menecia.Menecia;
-import net.projectx.menecia.player.PlayerActionBarUpdater;
-import net.projectx.menecia.player.PlayerManager;
+import net.projectx.menecia.player.PlayerStatusBarUpdater;
+import net.projectx.menecia.player.PlayerWrapperManager;
 import net.projectx.menecia.player.TabListManager;
 import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.entity.Player;
@@ -15,18 +15,18 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class PlayerGeneralEvent implements Listener {
+public class PlayerGeneralEvents implements Listener {
 
     private Menecia plugin;
-    private PlayerManager playerManager;
-    private PlayerActionBarUpdater playerActionBarUpdater;
+    private PlayerWrapperManager playerWrapperManager;
+    private PlayerStatusBarUpdater playerStatusBarUpdater;
     private static final int joiningEffectTime = 3;
 
-    public PlayerGeneralEvent(Menecia plugin) {
+    public PlayerGeneralEvents(Menecia plugin) {
         this.plugin = plugin;
-        playerManager = plugin.getManagers().getPlayerManager();
-        playerActionBarUpdater = new PlayerActionBarUpdater();
-        playerActionBarUpdater.runTaskTimerAsynchronously(plugin, 0, 5);
+        this.playerWrapperManager = plugin.getManagers().getPlayerWrapperManager();
+        this.playerStatusBarUpdater = new PlayerStatusBarUpdater();
+        this.plugin.runTaskTimerAsynchronously(playerStatusBarUpdater, 0, 5);
     }
 
     @EventHandler
@@ -34,8 +34,8 @@ public class PlayerGeneralEvent implements Listener {
         event.setJoinMessage(null);
         Player player = event.getPlayer();
 
-        playerManager.add(player);
-        playerActionBarUpdater.addUpdater(player);
+        playerWrapperManager.add(player);
+        playerStatusBarUpdater.update(player);
         TabListManager.initialize(player);
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * joiningEffectTime,
@@ -49,12 +49,12 @@ public class PlayerGeneralEvent implements Listener {
     }
 
     @EventHandler
-    private void onPlayerQitemuit(PlayerQuitEvent event) {
+    private void onPlayerQuit(PlayerQuitEvent event) {
         event.setQuitMessage(null);
         Player player = event.getPlayer();
 
-        playerManager.remove(player);
-        playerActionBarUpdater.removeUpdater(player);
+        playerWrapperManager.remove(player);
+        playerStatusBarUpdater.remove(player);
     }
 
     @EventHandler

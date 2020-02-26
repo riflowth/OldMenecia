@@ -9,7 +9,7 @@ import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.SlimeSplitEvent;
 
-public class ResetVanillaMobEvent implements Listener {
+public class ResetVanillaMobEvents implements Listener {
 
     @EventHandler
     private void resetVanillaDamage(EntityDamageByEntityEvent event) {

@@ -5,7 +5,7 @@ import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.MobType;
 import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.player.PlayerWrapper;
-import net.projectx.menecia.player.PlayerManager;
+import net.projectx.menecia.player.PlayerWrapperManager;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,12 +14,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class MobDamageEvent implements Listener {
 
-    private Menecia plugin;
-    private PlayerManager playerManager;
+    private PlayerWrapperManager playerWrapperManager;
 
     public MobDamageEvent(Menecia plugin) {
-        this.plugin = plugin;
-        playerManager = plugin.getManagers().getPlayerManager();
+        this.playerWrapperManager = plugin.getManagers().getPlayerWrapperManager();
     }
 
     @EventHandler
@@ -27,7 +25,7 @@ public class MobDamageEvent implements Listener {
         if ((MobUtil.isMob(event.getDamager())) && (event.getEntity() instanceof Player)) {
             if (MobUtil.getMobInstance(event.getDamager()).getMobType() == MobType.HOSTILE) {
                 Player player = (Player) event.getEntity();
-                PlayerWrapper playerWrapper = playerManager.getPlayerWrapper(player);
+                PlayerWrapper playerWrapper = playerWrapperManager.getPlayerWrapper(player);
                 LivingEntity mobEntity = (LivingEntity) event.getDamager();
                 Mob mob = MobUtil.getMobInstance(mobEntity);
 

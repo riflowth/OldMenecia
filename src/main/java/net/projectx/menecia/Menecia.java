@@ -4,9 +4,9 @@ import net.projectx.menecia.mobs.MobManager;
 import net.projectx.menecia.mobs.events.MobDamageEvent;
 import net.projectx.menecia.mobs.events.MobDeathEvent;
 import net.projectx.menecia.mobs.events.MobMoveEvent;
-import net.projectx.menecia.mobs.events.ResetVanillaMobEvent;
+import net.projectx.menecia.mobs.events.ResetVanillaMobEvents;
 import net.projectx.menecia.player.events.*;
-import net.projectx.menecia.player.events.admin.mobspawner.AdminPlaceMobSpawner;
+import net.projectx.menecia.player.events.admin.mobspawner.AdminPlaceMobSpawnerEvent;
 import net.projectx.menecia.player.guis.GUIListener;
 import net.projectx.menecia.resources.utilities.Log;
 import org.bukkit.plugin.PluginManager;
@@ -50,17 +50,17 @@ public class Menecia extends JavaPlugin {
     private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new ServerEvent(), this);
-        pluginManager.registerEvents(new ResetVanillaPlayerEvent(), this);
-        pluginManager.registerEvents(new ResetVanillaMobEvent(), this);
+        pluginManager.registerEvents(new ResetVanillaPlayerEvents(), this);
+        pluginManager.registerEvents(new ResetVanillaMobEvents(), this);
         pluginManager.registerEvents(new GUIListener(), this);
-        pluginManager.registerEvents(new AdminPlaceMobSpawner(this), this);
-        pluginManager.registerEvents(new PlayerGeneralEvent(this), this);
+        pluginManager.registerEvents(new AdminPlaceMobSpawnerEvent(this), this);
+        pluginManager.registerEvents(new PlayerGeneralEvents(this), this);
         pluginManager.registerEvents(new PlayerDamageEvent(this), this);
         pluginManager.registerEvents(new PlayerPickupItemEvent(), this);
         pluginManager.registerEvents(new MobDamageEvent(this), this);
         pluginManager.registerEvents(new MobDeathEvent(), this);
         pluginManager.registerEvents(new MobMoveEvent(), this);
-        pluginManager.registerEvents(new PlayerLevelingEvent(this), this);
+        pluginManager.registerEvents(new PlayerLevelingEvents(this), this);
     }
 
     private void registerConfigs() {

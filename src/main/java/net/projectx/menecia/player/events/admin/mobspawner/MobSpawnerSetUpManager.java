@@ -14,8 +14,8 @@ import java.util.UUID;
 public class MobSpawnerSetUpManager implements Listener {
 
     private Menecia plugin;
-    private Map<UUID, MobSpawnerStepUpState> setupStateMap = new HashMap<>();
-    private Map<UUID, MobSpawner> mobSpawnerTempMap = new HashMap<>();
+    private Map<UUID, MobSpawnerStepUpState> playerUuidToState = new HashMap<>();
+    private Map<UUID, MobSpawner> playerUuidToSpawner = new HashMap<>();
 
     public MobSpawnerSetUpManager(Menecia plugin) {
         this.plugin = plugin;
@@ -23,29 +23,29 @@ public class MobSpawnerSetUpManager implements Listener {
     }
 
     public void setState(Player player, MobSpawnerStepUpState state) {
-        setupStateMap.put(player.getUniqueId(), state);
+        playerUuidToState.put(player.getUniqueId(), state);
         if (state == MobSpawnerStepUpState.SELECT_MOB) {
-            mobSpawnerTempMap.put(player.getUniqueId(), new MobSpawner());
+            playerUuidToSpawner.put(player.getUniqueId(), new MobSpawner());
         }
     }
 
     public void success(Player player) {
-        setupStateMap.remove(player.getUniqueId());
-        plugin.getManagers().getMobSpawnerManager().addSpawner(mobSpawnerTempMap.get(player.getUniqueId()));
-        mobSpawnerTempMap.remove(player.getUniqueId());;
+        playerUuidToState.remove(player.getUniqueId());
+        plugin.getManagers().getMobSpawnerManager().addSpawner(playerUuidToSpawner.get(player.getUniqueId()));
+        playerUuidToSpawner.remove(player.getUniqueId())
     }
 
     public MobSpawner getSpawnerTemp(Player player) {
-        return mobSpawnerTempMap.get(player.getUniqueId());
+        return playerUuidToSpawner.get(player.getUniqueId());
     }
 
     @EventHandler
     public void onCloseSetUpGUI(InventoryCloseEvent event) {
         if (event.getInventory().getHolder() instanceof MobSpawnerGUI) {
             Player player = (Player) event.getPlayer();
-            if (setupStateMap.get(player.getUniqueId()) == null) return;
+            if (playerUuidToState.get(player.getUniqueId()) == null) return;
             plugin.runTaskLater(() -> {
-                switch (setupStateMap.get(player.getUniqueId())) {
+                switch (playerUuidToState.get(player.getUniqueId())) {
                     case SELECT_MOB:
                         player.openInventory(new MobSpawnerSelectMobGUI(plugin).getInventory());
                         break;

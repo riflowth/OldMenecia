@@ -4,7 +4,7 @@ import net.projectx.menecia.Menecia;
 import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.mobs.healthbar.MobHealthBarManager;
-import net.projectx.menecia.player.PlayerManager;
+import net.projectx.menecia.player.PlayerWrapperManager;
 import net.projectx.menecia.player.PlayerWrapper;
 import net.projectx.menecia.resources.Icons;
 import net.projectx.menecia.resources.utilities.Hologram;
@@ -28,22 +28,22 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PlayerDamageEvent implements Listener {
 
     private Menecia plugin;
-    private PlayerManager playerManager;
+    private PlayerWrapperManager playerWrapperManager;
     private MobHealthBarManager mobHealthBarManager;
     private static final int damageIndicatorShowTick = 20;
     private Map<LivingEntity, Map<UUID, Double>> damageMap = new HashMap<>();
 
     public PlayerDamageEvent(Menecia plugin) {
         this.plugin = plugin;
-        playerManager = plugin.getManagers().getPlayerManager();
-        mobHealthBarManager = plugin.getManagers().getMobHealthBarManager();
+        this.playerWrapperManager = plugin.getManagers().getPlayerWrapperManager();
+        this.mobHealthBarManager = plugin.getManagers().getMobHealthBarManager();
     }
 
     @EventHandler
     private void onEvent(EntityDamageByEntityEvent event) {
         if ((event.getDamager() instanceof Player) && (MobUtil.isMob(event.getEntity()))) {
             Player player = (Player) event.getDamager();
-            PlayerWrapper playerWrapper = playerManager.getPlayerWrapper(player);
+            PlayerWrapper playerWrapper = playerWrapperManager.getPlayerWrapper(player);
             Location playerLocation = player.getLocation();
             LivingEntity mobEntity = (LivingEntity) event.getEntity();
             Mob mob = MobUtil.getMobInstance(mobEntity);
@@ -84,8 +84,8 @@ public class PlayerDamageEvent implements Listener {
 
     private void updateDamage(Player player, LivingEntity mobEntity, double damage) {
         damageMap.putIfAbsent(mobEntity, new HashMap<UUID, Double>() {{ put(player.getUniqueId(), 0D); }});
-        Map<UUID, Double> playerDamagingMap = damageMap.get(mobEntity);
-        playerDamagingMap.merge(player.getUniqueId(), damage, Double::sum);
+        Map<UUID, Double> uuidToDamage = damageMap.get(mobEntity);
+        uuidToDamage.merge(player.getUniqueId(), damage, Double::sum);
     }
 
     private double checkDistance(Player player, Entity entity) {

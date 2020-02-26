@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 public class MobMoveEvent implements Listener {
 
     @EventHandler
-    private void onMobDecidesToMove(EntityPathfindEvent event) {
+    private void onEvent(EntityPathfindEvent event) {
     }
 
 }

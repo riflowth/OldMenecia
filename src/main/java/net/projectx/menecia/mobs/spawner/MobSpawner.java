@@ -12,8 +12,7 @@ public class MobSpawner {
     private int currentAmount = 0;
     private long timestamp = 0;
 
-    public MobSpawner() {
-    }
+    public MobSpawner() {}
 
     public MobSpawner(Mob mob, MobSpawnRate spawnRate, Area spawningArea, int maximumAmount) {
         this.mob = mob;

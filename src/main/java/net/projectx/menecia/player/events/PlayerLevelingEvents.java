@@ -7,11 +7,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 
-public class PlayerLevelingEvent implements Listener {
+public class PlayerLevelingEvents implements Listener {
 
     private Menecia plugin;
 
-    public PlayerLevelingEvent(Menecia plugin) {
+    public PlayerLevelingEvents(Menecia plugin) {
         this.plugin = plugin;
     }
 

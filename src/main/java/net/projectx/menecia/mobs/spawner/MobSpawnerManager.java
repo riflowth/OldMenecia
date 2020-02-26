@@ -23,14 +23,14 @@ public class MobSpawnerManager implements Listener {
     private MobSpawnerConfig config;
     private BukkitTask spawnerTask;
     private List<MobSpawner> spawnerList = new ArrayList<>();
-    private Map<Integer, MobSpawner> entityMap = new HashMap<>();
+    private Map<Integer, MobSpawner> entityIdToSpawner = new HashMap<>();
 
     public MobSpawnerManager(Menecia plugin) {
         this.plugin = plugin;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        config = plugin.getConfigs().getMobSpawnerConfig();
-        loadSpawners();
-        start();
+        this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        this.config = plugin.getConfigs().getMobSpawnerConfig();
+        this.loadSpawners();
+        this.start();
     }
 
     private void start() {
@@ -40,7 +40,7 @@ public class MobSpawnerManager implements Listener {
                 if (canSpawn(spawner)) {
                     Location spawningLocation = spawner.getSpawningArea().getRandomLocation();
                     int entityId = MobUtil.spawn(spawner.getMob(), spawningLocation).getEntityId();
-                    entityMap.put(entityId, spawner);
+                    entityIdToSpawner.put(entityId, spawner);
                     spawner.increaseCurrentAmount();
                     Log.sendSuccess("Spawned 1 " + MobUtil.getDisplayNameWithLevel(spawner.getMob())
                             + " &6(" + spawner.getCurrentAmount() + "/" + spawner.getMaximumAmount() + ")");
@@ -100,7 +100,7 @@ public class MobSpawnerManager implements Listener {
     public void removeMob(Entity entity) {
         if (MobUtil.isMob(entity)) {
             Mob mob = MobUtil.getMobInstance(entity);
-            MobSpawner spawner = entityMap.get(entity.getEntityId());
+            MobSpawner spawner = entityIdToSpawner.get(entity.getEntityId());
             spawner.decreaseCurrentAmount();
             Log.sendWarning("Despawned 1 " + MobUtil.getDisplayNameWithLevel(mob)
                     + " &6(" + spawner.getCurrentAmount() + "/" + spawner.getMaximumAmount() + ")");
