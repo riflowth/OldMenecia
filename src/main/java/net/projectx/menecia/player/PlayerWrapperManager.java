@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerManager {
+public class PlayerWrapperManager {
 
     private Map<UUID, PlayerWrapper> playerWrapperMap = new HashMap<>();
 

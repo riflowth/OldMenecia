@@ -3,26 +3,26 @@ package net.projectx.menecia;
 import net.projectx.menecia.mobs.MobManager;
 import net.projectx.menecia.mobs.healthbar.MobHealthBarManager;
 import net.projectx.menecia.mobs.spawner.MobSpawnerManager;
-import net.projectx.menecia.player.PlayerManager;
+import net.projectx.menecia.player.PlayerWrapperManager;
 import net.projectx.menecia.player.events.admin.mobspawner.MobSpawnerSetUpManager;
 
 public class Manager {
 
-    private PlayerManager playerManager;
+    private PlayerWrapperManager playerWrapperManager;
     private MobSpawnerManager mobSpawnerManager;
     private MobHealthBarManager mobHealthBarManager;
     private MobSpawnerSetUpManager mobSpawnerSetUpManager;
 
     Manager(Menecia plugin) {
         MobManager.register();
-        playerManager = new PlayerManager();
-        mobHealthBarManager = new MobHealthBarManager(plugin);
-        mobSpawnerManager = new MobSpawnerManager(plugin);
-        mobSpawnerSetUpManager = new MobSpawnerSetUpManager(plugin);
+        this.playerWrapperManager = new PlayerWrapperManager();
+        this.mobHealthBarManager = new MobHealthBarManager(plugin);
+        this.mobSpawnerManager = new MobSpawnerManager(plugin);
+        this.mobSpawnerSetUpManager = new MobSpawnerSetUpManager(plugin);
     }
 
-    public PlayerManager getPlayerManager() {
-        return playerManager;
+    public PlayerWrapperManager getPlayerWrapperManager() {
+        return playerWrapperManager;
     }
 
     public MobSpawnerManager getMobSpawnerManager() {

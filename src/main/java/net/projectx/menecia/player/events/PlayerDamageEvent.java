@@ -4,7 +4,7 @@ import net.projectx.menecia.Menecia;
 import net.projectx.menecia.mobs.Mob;
 import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.mobs.healthbar.MobHealthBarManager;
-import net.projectx.menecia.player.PlayerManager;
+import net.projectx.menecia.player.PlayerWrapperManager;
 import net.projectx.menecia.player.PlayerWrapper;
 import net.projectx.menecia.resources.Icons;
 import net.projectx.menecia.resources.utilities.Hologram;
@@ -28,14 +28,14 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PlayerDamageEvent implements Listener {
 
     private Menecia plugin;
-    private PlayerManager playerManager;
+    private PlayerWrapperManager playerWrapperManager;
     private MobHealthBarManager mobHealthBarManager;
     private static final int damageIndicatorShowTick = 20;
     private Map<LivingEntity, Map<UUID, Double>> damageMap = new HashMap<>();
 
     public PlayerDamageEvent(Menecia plugin) {
         this.plugin = plugin;
-        this.playerManager = plugin.getManagers().getPlayerManager();
+        this.playerWrapperManager = plugin.getManagers().getPlayerWrapperManager();
         this.mobHealthBarManager = plugin.getManagers().getMobHealthBarManager();
     }
 
@@ -43,7 +43,7 @@ public class PlayerDamageEvent implements Listener {
     private void onEvent(EntityDamageByEntityEvent event) {
         if ((event.getDamager() instanceof Player) && (MobUtil.isMob(event.getEntity()))) {
             Player player = (Player) event.getDamager();
-            PlayerWrapper playerWrapper = playerManager.getPlayerWrapper(player);
+            PlayerWrapper playerWrapper = playerWrapperManager.getPlayerWrapper(player);
             Location playerLocation = player.getLocation();
             LivingEntity mobEntity = (LivingEntity) event.getEntity();
             Mob mob = MobUtil.getMobInstance(mobEntity);

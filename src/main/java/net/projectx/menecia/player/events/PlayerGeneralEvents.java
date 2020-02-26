@@ -3,7 +3,7 @@ package net.projectx.menecia.player.events;
 import net.md_5.bungee.api.ChatColor;
 import net.projectx.menecia.Menecia;
 import net.projectx.menecia.player.PlayerActionBarUpdater;
-import net.projectx.menecia.player.PlayerManager;
+import net.projectx.menecia.player.PlayerWrapperManager;
 import net.projectx.menecia.player.TabListManager;
 import net.projectx.menecia.resources.utilities.Utils;
 import org.bukkit.entity.Player;
@@ -18,13 +18,13 @@ import org.bukkit.potion.PotionEffectType;
 public class PlayerGeneralEvents implements Listener {
 
     private Menecia plugin;
-    private PlayerManager playerManager;
+    private PlayerWrapperManager playerWrapperManager;
     private PlayerActionBarUpdater playerActionBarUpdater;
     private static final int joiningEffectTime = 3;
 
     public PlayerGeneralEvents(Menecia plugin) {
         this.plugin = plugin;
-        this.playerManager = plugin.getManagers().getPlayerManager();
+        this.playerWrapperManager = plugin.getManagers().getPlayerWrapperManager();
         this.playerActionBarUpdater = new PlayerActionBarUpdater();
         this.playerActionBarUpdater.runTaskTimerAsynchronously(plugin, 0, 5);
     }
@@ -34,7 +34,7 @@ public class PlayerGeneralEvents implements Listener {
         event.setJoinMessage(null);
         Player player = event.getPlayer();
 
-        playerManager.add(player);
+        playerWrapperManager.add(player);
         playerActionBarUpdater.addUpdater(player);
         TabListManager.initialize(player);
 
@@ -53,7 +53,7 @@ public class PlayerGeneralEvents implements Listener {
         event.setQuitMessage(null);
         Player player = event.getPlayer();
 
-        playerManager.remove(player);
+        playerWrapperManager.remove(player);
         playerActionBarUpdater.removeUpdater(player);
     }
 
