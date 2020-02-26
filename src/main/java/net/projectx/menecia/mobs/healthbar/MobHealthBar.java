@@ -1,4 +1,4 @@
-package net.projectx.menecia.player.bossbars;
+package net.projectx.menecia.mobs.healthbar;
 
 import net.projectx.menecia.mobs.MobUtil;
 import net.projectx.menecia.resources.Icons;

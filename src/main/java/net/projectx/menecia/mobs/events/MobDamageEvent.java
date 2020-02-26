@@ -14,12 +14,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class MobDamageEvent implements Listener {
 
-    private Menecia plugin;
     private PlayerManager playerManager;
 
     public MobDamageEvent(Menecia plugin) {
-        this.plugin = plugin;
-        playerManager = plugin.getManagers().getPlayerManager();
+        this.playerManager = plugin.getManagers().getPlayerManager();
     }
 
     @EventHandler

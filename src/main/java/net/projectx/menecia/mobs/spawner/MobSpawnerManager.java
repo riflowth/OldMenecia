@@ -27,10 +27,10 @@ public class MobSpawnerManager implements Listener {
 
     public MobSpawnerManager(Menecia plugin) {
         this.plugin = plugin;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        config = plugin.getConfigs().getMobSpawnerConfig();
-        loadSpawners();
-        start();
+        this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        this.config = plugin.getConfigs().getMobSpawnerConfig();
+        this.loadSpawners();
+        this.start();
     }
 
     private void start() {

@@ -35,8 +35,8 @@ public class PlayerDamageEvent implements Listener {
 
     public PlayerDamageEvent(Menecia plugin) {
         this.plugin = plugin;
-        playerManager = plugin.getManagers().getPlayerManager();
-        mobHealthBarManager = plugin.getManagers().getMobHealthBarManager();
+        this.playerManager = plugin.getManagers().getPlayerManager();
+        this.mobHealthBarManager = plugin.getManagers().getMobHealthBarManager();
     }
 
     @EventHandler

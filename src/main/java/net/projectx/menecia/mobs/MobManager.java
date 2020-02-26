@@ -16,6 +16,8 @@ public class MobManager {
     private static MobManager instance;
     private Map<Integer, Mob> mobMap = new HashMap<>();
 
+    private MobManager() {}
+
     public static void register() {
         if (instance == null) {
             instance = new MobManager();

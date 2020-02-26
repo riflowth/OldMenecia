@@ -1,6 +1,5 @@
 package net.projectx.menecia.mobs.healthbar;
 
-import net.projectx.menecia.player.bossbars.MobHealthBar;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
