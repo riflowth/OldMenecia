@@ -9,19 +9,19 @@ import java.util.UUID;
 
 public class PlayerWrapperManager {
 
-    private Map<UUID, PlayerWrapper> playerWrapperMap = new HashMap<>();
+    private Map<UUID, PlayerWrapper> uuidToWrapper = new HashMap<>();
 
     public void add(Player player) {
-        playerWrapperMap.put(player.getUniqueId(), new PlayerWrapper(player));
+        uuidToWrapper.put(player.getUniqueId(), new PlayerWrapper(player));
         Log.sendSuccess("Added Player named &f" + player.getName());
     }
 
     public void remove(Player player) {
-        playerWrapperMap.remove(player.getUniqueId());
+        uuidToWrapper.remove(player.getUniqueId());
     }
 
     public PlayerWrapper getPlayerWrapper(Player player) {
-        return playerWrapperMap.get(player.getUniqueId());
+        return uuidToWrapper.get(player.getUniqueId());
     }
 
 }

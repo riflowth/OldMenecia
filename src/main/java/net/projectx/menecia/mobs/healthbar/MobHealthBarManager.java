@@ -10,8 +10,8 @@ import java.util.UUID;
 
 public class MobHealthBarManager {
 
-    private Map<LivingEntity, MobHealthBar> healthBarMap = new HashMap<>();
-    private Map<UUID, MobHealthBar> healthBarCache = new HashMap<>();
+    private Map<LivingEntity, MobHealthBar> livingEntityToHealthBar = new HashMap<>();
+    private Map<UUID, MobHealthBar> uuidToMobHealthBar = new HashMap<>();
     private MobHealthBarUpdater mobHealthBarUpdater;
 
     public MobHealthBarManager(Menecia plugin) {
@@ -21,8 +21,8 @@ public class MobHealthBarManager {
     }
 
     public void showHealthBar(Player player, LivingEntity mobEntity) {
-        healthBarMap.putIfAbsent(mobEntity, new MobHealthBar(mobEntity));
-        MobHealthBar mobHealthBar = healthBarMap.get(mobEntity);
+        livingEntityToHealthBar.putIfAbsent(mobEntity, new MobHealthBar(mobEntity));
+        MobHealthBar mobHealthBar = livingEntityToHealthBar.get(mobEntity);
         cacheHealthBarForPlayer(player, mobHealthBar);
         if (!mobHealthBar.hasShowTo(player)) mobHealthBar.show(player);
         mobHealthBar.update();
@@ -30,17 +30,17 @@ public class MobHealthBarManager {
     }
 
     public void removeHealthBar(LivingEntity mobEntity) {
-        if (healthBarMap.containsKey(mobEntity)) healthBarMap.get(mobEntity).hideAll();
-        healthBarMap.remove(mobEntity);
+        if (livingEntityToHealthBar.containsKey(mobEntity)) livingEntityToHealthBar.get(mobEntity).hideAll();
+        livingEntityToHealthBar.remove(mobEntity);
     }
 
     private void cacheHealthBarForPlayer(Player player, MobHealthBar newHealthBar) {
-        if (healthBarCache.get(player.getUniqueId()) != null) {
-            if (healthBarCache.get(player.getUniqueId()) != newHealthBar) {
-                healthBarCache.get(player.getUniqueId()).hide(player);
+        if (uuidToMobHealthBar.get(player.getUniqueId()) != null) {
+            if (uuidToMobHealthBar.get(player.getUniqueId()) != newHealthBar) {
+                uuidToMobHealthBar.get(player.getUniqueId()).hide(player);
             }
         }
-        healthBarCache.put(player.getUniqueId(), newHealthBar);
+        uuidToMobHealthBar.put(player.getUniqueId(), newHealthBar);
     }
 
 }

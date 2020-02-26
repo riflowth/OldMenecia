@@ -14,7 +14,7 @@ import java.util.Map;
 public class MobManager {
 
     private static MobManager instance;
-    private Map<Integer, Mob> mobMap = new HashMap<>();
+    private Map<Integer, Mob> idToMob = new HashMap<>();
 
     private MobManager() {}
 
@@ -28,15 +28,15 @@ public class MobManager {
     }
 
     private static void registerMob(int id, Mob mob) {
-        instance.mobMap.put(id, mob);
+        instance.idToMob.put(id, mob);
     }
 
     public static Mob getMob(int id) {
-        return instance.mobMap.get(id);
+        return instance.idToMob.get(id);
     }
 
     public static List<Mob> getAllMobs() {
-        return new ArrayList<>(instance.mobMap.values());
+        return new ArrayList<>(instance.idToMob.values());
     }
 
     public static void killAllMobs() {

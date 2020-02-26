@@ -60,12 +60,12 @@ public class MobUtil {
     }
 
     public static String getDisplayName(Mob mob) {
-        Map<MobType, ChatColor> prefixColorMap = new HashMap<MobType, ChatColor>(){{
+        Map<MobType, ChatColor> mobTypeToColor = new HashMap<MobType, ChatColor>(){{
             put(MobType.PEACEFUL, ChatColor.GREEN);
             put(MobType.NEUTRAL, ChatColor.GOLD);
             put(MobType.HOSTILE, ChatColor.RED);
         }};
-        return prefixColorMap.get(mob.getMobType()) + mob.getName();
+        return mobTypeToColor.get(mob.getMobType()) + mob.getName();
     }
 
 }
