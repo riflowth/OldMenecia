@@ -4,7 +4,7 @@ import net.projectx.menecia.resources.configs.MobSpawnerConfig;
 
 public class Config {
 
-    private MobSpawnerConfig mobSpawnerConfig;
+    private final MobSpawnerConfig mobSpawnerConfig;
 
     Config(Menecia plugin) {
         this.mobSpawnerConfig = new MobSpawnerConfig(plugin);

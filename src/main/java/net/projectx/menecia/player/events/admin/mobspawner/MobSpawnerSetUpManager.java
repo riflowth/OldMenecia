@@ -32,7 +32,7 @@ public class MobSpawnerSetUpManager implements Listener {
     public void success(Player player) {
         playerUuidToState.remove(player.getUniqueId());
         plugin.getManagers().getMobSpawnerManager().addSpawner(playerUuidToSpawner.get(player.getUniqueId()));
-        playerUuidToSpawner.remove(player.getUniqueId());;
+        playerUuidToSpawner.remove(player.getUniqueId())
     }
 
     public MobSpawner getSpawnerTemp(Player player) {

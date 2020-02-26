@@ -8,10 +8,10 @@ import net.projectx.menecia.player.events.admin.mobspawner.MobSpawnerSetUpManage
 
 public class Manager {
 
-    private PlayerWrapperManager playerWrapperManager;
-    private MobSpawnerManager mobSpawnerManager;
-    private MobHealthBarManager mobHealthBarManager;
-    private MobSpawnerSetUpManager mobSpawnerSetUpManager;
+    private final PlayerWrapperManager playerWrapperManager;
+    private final MobSpawnerManager mobSpawnerManager;
+    private final MobHealthBarManager mobHealthBarManager;
+    private final MobSpawnerSetUpManager mobSpawnerSetUpManager;
 
     Manager(Menecia plugin) {
         MobManager.register();

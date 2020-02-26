@@ -15,7 +15,7 @@ public class AdminPlaceMobSpawnerEvent implements Listener {
 
     public AdminPlaceMobSpawnerEvent(Menecia plugin) {
         this.plugin = plugin;
-        setupManager = plugin.getManagers().getMobSpawnerSetUpManager();
+        this.setupManager = plugin.getManagers().getMobSpawnerSetUpManager();
     }
 
     @EventHandler
