@@ -21,7 +21,6 @@ public class ResetVanillaPlayerEvents implements Listener {
         }
     }
 
-    @EventHandler
     private void displayDamageEffect(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Location playerLocation = player.getLocation();
