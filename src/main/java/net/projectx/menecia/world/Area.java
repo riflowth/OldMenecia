@@ -15,8 +15,12 @@ public class Area {
     private int zMin;
     private int zMax;
     private World world;
+    private Location firstLocation;
+    private Location secondLocation;
 
     public Area(Location firstLocation, Location secondLocation) {
+        this.firstLocation = firstLocation;
+        this.secondLocation = secondLocation;
         xMin = Math.min(firstLocation.getBlockX(), secondLocation.getBlockX());
         xMax = Math.max(firstLocation.getBlockX(), secondLocation.getBlockX());
         yMin = Math.min(firstLocation.getBlockY(), secondLocation.getBlockY());
@@ -52,6 +56,14 @@ public class Area {
         xMax += radius;
         zMin -= radius;
         zMax += radius;
+    }
+
+    public Location getFirstLocation() {
+        return firstLocation;
+    }
+
+    public Location getSecondLocation() {
+        return secondLocation;
     }
 
 }

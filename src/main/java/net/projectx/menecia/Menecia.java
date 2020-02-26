@@ -41,6 +41,12 @@ public class Menecia extends JavaPlugin {
         Log.sendFooterBanner();
     }
 
+    private void unregisterAll() {
+        manager.getMobSpawnerManager().stop();
+        manager = null;
+        config = null;
+    }
+
     private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new ServerEvent(), this);
@@ -71,12 +77,6 @@ public class Menecia extends JavaPlugin {
 
     public Manager getManagers() {
         return manager;
-    }
-
-    private void unregisterAll() {
-        manager.getMobSpawnerManager().stop();
-        manager = null;
-        config = null;
     }
 
     public BukkitScheduler getScheduler() {

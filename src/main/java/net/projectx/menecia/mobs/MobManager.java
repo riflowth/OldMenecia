@@ -1,6 +1,7 @@
 package net.projectx.menecia.mobs;
 
 import net.projectx.menecia.mobs.monsters.BabySlime;
+import net.projectx.menecia.mobs.monsters.DecayingCorpse;
 import net.projectx.menecia.mobs.monsters.MotherSlime;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -20,6 +21,7 @@ public class MobManager {
             instance = new MobManager();
             registerMob(BabySlime.ID, new BabySlime());
             registerMob(MotherSlime.ID, new MotherSlime());
+            registerMob(DecayingCorpse.ID, new DecayingCorpse());
         }
     }
 

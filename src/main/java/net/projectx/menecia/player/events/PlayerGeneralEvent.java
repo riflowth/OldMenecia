@@ -49,7 +49,7 @@ public class PlayerGeneralEvent implements Listener {
     }
 
     @EventHandler
-    private void onPlayerQuit(PlayerQuitEvent event) {
+    private void onPlayerQitemuit(PlayerQuitEvent event) {
         event.setQuitMessage(null);
         Player player = event.getPlayer();
 

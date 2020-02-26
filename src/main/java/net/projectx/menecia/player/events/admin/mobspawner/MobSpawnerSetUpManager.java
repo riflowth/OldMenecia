@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class MobSpawnerSetUpManager implements Listener {
 
-    public Menecia plugin;
+    private Menecia plugin;
     private Map<UUID, MobSpawnerStepUpState> setupStateMap = new HashMap<>();
     private Map<UUID, MobSpawner> mobSpawnerTempMap = new HashMap<>();
 
@@ -32,7 +32,7 @@ public class MobSpawnerSetUpManager implements Listener {
     public void success(Player player) {
         setupStateMap.remove(player.getUniqueId());
         plugin.getManagers().getMobSpawnerManager().addSpawner(mobSpawnerTempMap.get(player.getUniqueId()));
-        mobSpawnerTempMap.remove(player.getUniqueId());
+        mobSpawnerTempMap.remove(player.getUniqueId());;
     }
 
     public MobSpawner getSpawnerTemp(Player player) {

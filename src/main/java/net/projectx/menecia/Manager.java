@@ -18,7 +18,6 @@ public class Manager {
         playerManager = new PlayerManager();
         mobHealthBarManager = new MobHealthBarManager(plugin);
         mobSpawnerManager = new MobSpawnerManager(plugin);
-        mobSpawnerManager.start();
         mobSpawnerSetUpManager = new MobSpawnerSetUpManager(plugin);
     }
 

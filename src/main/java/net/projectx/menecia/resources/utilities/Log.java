@@ -5,8 +5,8 @@ import org.bukkit.command.ConsoleCommandSender;
 
 public class Log {
 
-    private static String prefix = "&f[Menecia]";
-    private static ConsoleCommandSender sender = Bukkit.getConsoleSender();
+    private static final String prefix = "&f[Menecia]";
+    private static final ConsoleCommandSender sender = Bukkit.getConsoleSender();
 
     public static void sendMessage(String message) {
         sender.sendMessage(Utils.color(message));

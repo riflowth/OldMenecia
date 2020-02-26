@@ -20,6 +20,7 @@ import java.util.Map;
 public class MobSpawnerManager implements Listener {
 
     private Menecia plugin;
+    private MobSpawnerConfig config;
     private BukkitTask spawnerTask;
     private List<MobSpawner> spawnerList = new ArrayList<>();
     private Map<Integer, MobSpawner> entityMap = new HashMap<>();
@@ -27,9 +28,12 @@ public class MobSpawnerManager implements Listener {
     public MobSpawnerManager(Menecia plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        config = plugin.getConfigs().getMobSpawnerConfig();
+        loadSpawners();
+        start();
     }
 
-    public void start() {
+    private void start() {
         Log.sendSuccess("Started Mob Spawner!");
         spawnerTask = plugin.runTaskTimer(() -> {
             for (MobSpawner spawner : spawnerList) {
@@ -44,6 +48,10 @@ public class MobSpawnerManager implements Listener {
             }
 
         }, 0, 20);
+    }
+
+    public void stop() {
+        spawnerTask.cancel();
     }
 
     public boolean canSpawn(MobSpawner spawner) {
@@ -99,23 +107,20 @@ public class MobSpawnerManager implements Listener {
         }
     }
 
-    public void loadSpawner(MobSpawner spawner) {
-        // TODO: Work with Config file!
+    public void loadSpawners() {
+        spawnerList.addAll(config.getSpawners());
+        Log.sendSuccess("Loaded All Spawners!");
     }
 
     public void addSpawner(MobSpawner spawner) {
         spawnerList.add(spawner);
-        // TODO: Work with Config file!
-        MobSpawnerConfig config = plugin.getConfigs().getMobSpawnerConfig();
+        config.addSpawner(spawner);
+        Log.sendSuccess("Added New Spawner!");
     }
 
     public void removeSpawner(MobSpawner spawner) {
         // TODO: Work with Config file!
         spawnerList.remove(spawner);
-    }
-
-    public void stop() {
-        spawnerTask.cancel();
     }
 
 }

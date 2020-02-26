@@ -16,10 +16,10 @@ public class PlayerPickupItemEvent implements Listener {
             ItemStack itemStack = event.getItem().getItemStack();
             String dropName = itemStack.getItemMeta().getDisplayName();
             if (itemStack.getAmount() > 1) {
-                player.sendTitle("", Utils.color("&7You have found a " + dropName + "!"),
+                player.sendTitle("", Utils.color("&7You have found some " + dropName + "s!"),
                         10, 40, 10);
             } else {
-                player.sendTitle("", Utils.color("&7You have found some " + dropName + "s!"),
+                player.sendTitle("", Utils.color("&7You have found a " + dropName + "!"),
                         10, 40, 10);
             }
         }

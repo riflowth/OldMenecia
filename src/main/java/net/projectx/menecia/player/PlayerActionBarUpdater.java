@@ -61,6 +61,7 @@ public class PlayerActionBarUpdater extends BukkitRunnable {
                     .append(0);
 
             player.sendActionBar('&', stringBuilder.toString());
+            stringBuilder.delete(0, stringBuilder.length());
         });
     }
 

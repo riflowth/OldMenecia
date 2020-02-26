@@ -12,7 +12,7 @@ public abstract class Packet {
 
     public Packet(PacketContainer packet) {
         this.packet = packet;
-        packet.getModifier().writeDefaults();
+        this.packet.getModifier().writeDefaults();
     }
 
     public PacketContainer getPacket() {
