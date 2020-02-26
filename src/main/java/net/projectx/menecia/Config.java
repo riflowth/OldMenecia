@@ -7,8 +7,7 @@ public class Config {
     private MobSpawnerConfig mobSpawnerConfig;
 
     Config(Menecia plugin) {
-        mobSpawnerConfig = new MobSpawnerConfig(plugin);
-        mobSpawnerConfig.initialize();
+        this.mobSpawnerConfig = new MobSpawnerConfig(plugin);
     }
 
     public MobSpawnerConfig getMobSpawnerConfig() {

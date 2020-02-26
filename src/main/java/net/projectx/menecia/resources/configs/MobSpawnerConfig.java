@@ -23,6 +23,7 @@ public class MobSpawnerConfig {
         this.plugin = plugin;
         this.pluginDataFolder = plugin.getDataFolder();
         this.file = new File(pluginDataFolder, fileNameWithExtension);
+        this.initialize();
     }
 
     public void initialize() {
