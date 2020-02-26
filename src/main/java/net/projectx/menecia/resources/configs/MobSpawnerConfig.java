@@ -85,7 +85,6 @@ public class MobSpawnerConfig {
         List<MobSpawner> mobSpawners = new ArrayList<>();
 
         List<?> objects = config.getList("spawner-list");
-        System.out.println(objects);
 
         return Collections.emptyList();
     }
