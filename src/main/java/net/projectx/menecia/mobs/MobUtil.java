@@ -31,9 +31,7 @@ public class MobUtil {
 
             return entity;
         } catch (ClassCastException exception) {
-            Entity entity = location.getWorld().spawnEntity(location, mob.getEntityType());
-            entity.getPersistentDataContainer().set(Keys.MOB_ID, PersistentDataType.INTEGER, mob.getId());
-            return entity;
+            throw new IllegalArgumentException("Mob must be a LivingEntity!");
         }
     }
 
