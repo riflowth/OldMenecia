@@ -1,7 +1,5 @@
 package net.projectx.menecia.player.events;
 
-import com.destroystokyo.paper.event.player.PlayerJumpEvent;
-import net.projectx.menecia.Menecia;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
