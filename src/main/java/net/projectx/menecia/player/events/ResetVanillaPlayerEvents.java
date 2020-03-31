@@ -30,5 +30,4 @@ public class ResetVanillaPlayerEvents implements Listener {
         playerLocation.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation, 1);
         player.playSound(playerLocation, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.8F, 0F);
     }
-
 }

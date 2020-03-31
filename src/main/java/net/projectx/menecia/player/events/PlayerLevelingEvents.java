@@ -1,5 +1,6 @@
 package net.projectx.menecia.player.events;
 
+import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import net.projectx.menecia.Menecia;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,5 +31,4 @@ public class PlayerLevelingEvents implements Listener {
         event.setDroppedExp(0);
         event.getDrops().clear();
     }
-
 }
