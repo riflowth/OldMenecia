@@ -55,6 +55,7 @@ public class Menecia extends JavaPlugin {
         pluginManager.registerEvents(new GUIListener(), this);
         pluginManager.registerEvents(new AdminPlaceMobSpawnerEvent(this), this);
         pluginManager.registerEvents(new PlayerGeneralEvents(this), this);
+        pluginManager.registerEvents(new PlayerSkillEvents(this), this);
         pluginManager.registerEvents(new PlayerDamageEvent(this), this);
         pluginManager.registerEvents(new PlayerPickupItemEvent(), this);
         pluginManager.registerEvents(new MobDamageEvent(this), this);

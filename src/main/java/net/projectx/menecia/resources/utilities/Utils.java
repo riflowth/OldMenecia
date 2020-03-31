@@ -8,4 +8,14 @@ public class Utils {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 
+    public static <T> int getLength(T[] array){
+        int count = 0;
+        for (T element : array) {
+            if (element != null) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 }
