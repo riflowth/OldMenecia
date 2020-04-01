@@ -27,9 +27,9 @@ public class SkillFormula {
     };
 
     public static final SkillElement[] BUFF_SKILL = new SkillElement[] {
-            SkillElement.RIGHT_CLICK,
-            SkillElement.RIGHT_CLICK,
-            SkillElement.RIGHT_CLICK
+            SkillElement.SHIFT_RIGHT_CLICK,
+            SkillElement.SHIFT_RIGHT_CLICK,
+            SkillElement.SHIFT_RIGHT_CLICK
     };
 
 }
