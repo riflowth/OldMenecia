@@ -30,7 +30,9 @@ public class PlayerSkillEvent implements Listener {
         Player player = event.getPlayer();
 
         if (action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) {
-            addSkillElement(player, SkillElement.LEFT_CLICK);
+            if (playerUuidToSkillElements.containsKey(player.getUniqueId())) {
+                addSkillElement(player, SkillElement.LEFT_CLICK);
+            }
         } else if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
             if (player.isSneaking()) {
                 addSkillElement(player, SkillElement.SHIFT_RIGHT_CLICK);
@@ -66,9 +68,7 @@ public class PlayerSkillEvent implements Listener {
     private void addSkillElement(Player player, SkillElement skillElement) {
         playerUuidToSkillElements.putIfAbsent(player.getUniqueId(), new SkillElement[3]);
         SkillElement[] skillElements = playerUuidToSkillElements.get(player.getUniqueId());
-        int skillElementIndex = ((Utils.getLength(skillElements) - 1) < 0)
-                ? 0 : Utils.getLength(skillElements);
-        skillElements[skillElementIndex] = skillElement;
+        skillElements[Utils.getLength(skillElements)] = skillElement;
         playerUuidToSkillElements.put(player.getUniqueId(), skillElements);
     }
 
