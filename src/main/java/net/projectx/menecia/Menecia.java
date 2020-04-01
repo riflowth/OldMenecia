@@ -50,18 +50,18 @@ public class Menecia extends JavaPlugin {
     private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new ServerEvent(), this);
-        pluginManager.registerEvents(new ResetVanillaPlayerEvents(), this);
+        pluginManager.registerEvents(new ResetVanillaPlayerEvent(), this);
         pluginManager.registerEvents(new ResetVanillaMobEvents(), this);
         pluginManager.registerEvents(new GUIListener(), this);
         pluginManager.registerEvents(new AdminPlaceMobSpawnerEvent(this), this);
-        pluginManager.registerEvents(new PlayerGeneralEvents(this), this);
-        pluginManager.registerEvents(new PlayerSkillEvents(this), this);
+        pluginManager.registerEvents(new PlayerGeneralEvent(this), this);
+        pluginManager.registerEvents(new PlayerSkillEvent(this), this);
         pluginManager.registerEvents(new PlayerDamageEvent(this), this);
         pluginManager.registerEvents(new PlayerPickupItemEvent(), this);
         pluginManager.registerEvents(new MobDamageEvent(this), this);
         pluginManager.registerEvents(new MobDeathEvent(), this);
         pluginManager.registerEvents(new MobMoveEvent(), this);
-        pluginManager.registerEvents(new PlayerLevelingEvents(this), this);
+        pluginManager.registerEvents(new PlayerLevelingEvent(this), this);
     }
 
     private void registerConfigs() {

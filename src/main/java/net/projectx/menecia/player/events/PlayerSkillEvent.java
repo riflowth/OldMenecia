@@ -15,12 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerSkillEvents implements Listener {
+public class PlayerSkillEvent implements Listener {
 
     private Menecia plugin;
     private Map<UUID, SkillElement[]> playerUuidToSkillElements = new HashMap<>();
 
-    public PlayerSkillEvents(Menecia plugin) {
+    public PlayerSkillEvent(Menecia plugin) {
         this.plugin = plugin;
     }
 

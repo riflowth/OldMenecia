@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ResetVanillaPlayerEvents implements Listener {
+public class ResetVanillaPlayerEvent implements Listener {
 
     @EventHandler
     private void onPlayerInteractEvent(PlayerInteractEvent event) {

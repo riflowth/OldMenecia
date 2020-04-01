@@ -15,14 +15,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class PlayerGeneralEvents implements Listener {
+public class PlayerGeneralEvent implements Listener {
 
     private Menecia plugin;
     private PlayerWrapperManager playerWrapperManager;
     private PlayerStatusBarUpdater playerStatusBarUpdater;
     private static final int joiningEffectTime = 3;
 
-    public PlayerGeneralEvents(Menecia plugin) {
+    public PlayerGeneralEvent(Menecia plugin) {
         this.plugin = plugin;
         this.playerWrapperManager = plugin.getManagers().getPlayerWrapperManager();
         this.playerStatusBarUpdater = new PlayerStatusBarUpdater();
