@@ -5,8 +5,7 @@
 ---
 
 <p align="center">
-  <a href="https://github.com/riflowth/Menecia/releases"><img src="https://img.shields.io/github/release/Menecia
-  /Menecia.svg" alt="Release"></a>
+  <a href="https://github.com/riflowth/Menecia/releases"><img src="https://img.shields.io/github/v/release/Menecia/Menecia.svg" alt="Release"></a>
   <a href="https://discord.gg/rPgUTjA"><img src="https://img.shields.io/discord/554187762983763979.svg?color=blue&label=discord&logo=discord" alt="Discord"></a>
 <p>
 
