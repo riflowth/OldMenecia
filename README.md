@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://github.com/riflowth/Menecia/raw/master/.github/ProjectXBanner.png" alt="ProjectX">
+    <img src="https://github.com/riflowth/OldMenecia/raw/master/.github/ProjectXBanner.png" alt="ProjectX">
 </p>
 
 ---
